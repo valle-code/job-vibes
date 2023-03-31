@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Container, Navbar, Text, Button, Grid, Col } from '@nextui-org/react';
+import Link from 'next/link';
 import styles from './styles/login.module.css';
 
 
@@ -22,10 +23,23 @@ const Login: NextPage = () => {
                 <div className={styles.textinput}>
                     <input className = {styles.input} type="password" placeholder="Password"/>
                 </div>
-                <button className={styles.loginbtn}>LOGIN MANUAL</button>
-                    <a href="#" className={styles.forgot}>Olvidaste tu contraseña?</a>
+                <Button href="/" className={styles.loginbtn} >LOGIN MANUAL</Button>
+                
+                <div className={styles.googlebtn}>
+                    <a href="/">
+                    <div className={styles.googleiconwrapper}>
+                        <img className={styles.googleicon} src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                    </div>
+                    <p className={styles.btntext}><b>Inicia sesión con Google</b></p>
+                    </a>
+                </div>
+                    <Link className={styles.forgot} href="recupera-contrasena">
+                        ¿Olvidaste tu contraseña?
+                    </Link>
                 <div className={styles.create}>
-                    <a className={styles.createLink} href="register">Create Your Account</a>
+                    <Link className={styles.createLink} href="register">
+                        Crea tu cuenta aquí
+                    </Link>
                 </div>
             </div>
         </div>

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
-import { Container, Navbar, Text, Button, Grid, Col } from '@nextui-org/react';
-import styles from './styles/login.module.css';
-
+import { Container, Navbar, Text, Button, Grid, Col, Link } from '@nextui-org/react';
+import styles from './styles/register.module.css';
 
 const Login: NextPage = () => {
   return (
@@ -15,17 +14,35 @@ const Login: NextPage = () => {
             <div className={`${styles.pill4} ${styles['rotate-45']}`}></div>
         </div>
             <div className={styles.login}>
-                <h3 className={styles.title}>Resgistro de Usuario</h3>
+                <h3 className={styles.title}>Registro de Usuario</h3>
                 <div className={styles.textinput}>
-                    <input className = {styles.input} type="text" placeholder="Username"/>
+                    <input className = {styles.input} type="text" placeholder="Email"/>
                 </div>
                 <div className={styles.textinput}>
-                    <input className = {styles.input} type="password" placeholder="Password"/>
+                    <input className = {styles.input} type="text" placeholder="Nombre de usuario"/>
                 </div>
-                <button className={styles.loginbtn}>LOGIN</button>
-                <a href="#" className={styles.forgot}>Olvidaste tu contraseña?</a>
+                <div className={styles.textinput}>
+                    <input className = {styles.input} type="password" placeholder="Contraseña"/>
+                </div>
+                <div className={styles.textinput}>
+                    <input className = {styles.input} type="password" placeholder="Confirma tu contraseña"/>
+                </div>
+                <button className={styles.loginbtn}>REGISTRO DE USUARIO</button>
+                {/* Google Button */}
+                
+                <div className={styles.googlebtn}>
+                    <div className={styles.googleiconwrapper}>
+                        <img className={styles.googleicon} src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                    </div>
+                    <p className={styles.btntext}><b>Inicia sesión con Google</b></p>
+                </div>
+                <Link className={styles.forgot} href="recupera-contrasena">
+                        ¿Olvidaste tu contraseña?
+                </Link>
                 <div className={styles.create}>
-                    <a className={styles.createLink} href="#">¿Tienes una cuenta ya?</a>
+                    <Link className={styles.createLink} href="login">
+                        ¿Tienes una cuenta ya?
+                    </Link>
                 </div>
             </div>
         </div>

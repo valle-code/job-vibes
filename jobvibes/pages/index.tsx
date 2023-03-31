@@ -37,7 +37,7 @@ const Home: NextPage = () => {
             Login
           </Navbar.Link>
           <Navbar.Item className="nav">
-            <Button auto flat href="#">
+            <Button auto flat href="register">
               Sign Up
             </Button>
           </Navbar.Item>

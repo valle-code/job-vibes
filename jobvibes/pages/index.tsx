@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           <Navbar.Link className="nav" href="#">Company</Navbar.Link>
         </Navbar.Content>
         <Navbar.Content className="nav">
-          <Navbar.Link className="nav" color="inherit" href="#">
+          <Navbar.Link className="nav" color="inherit" href="login">
             Login
           </Navbar.Link>
           <Navbar.Item className="nav">

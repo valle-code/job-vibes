@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import type { NextPage } from 'next';
-import { Container, Navbar, Text, Button, Grid, Col } from '@nextui-org/react';
-import Link from 'next/link';
+import {Button, Link} from '@nextui-org/react';
 import styles from './styles/login.module.css';
-
 
 const Login: NextPage = () => {
   return (

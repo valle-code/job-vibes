@@ -5,12 +5,12 @@ interface Props {
     title: string;
     label: string;
     imageURL: string;
-    studentCount: string;
+    candidateCount: string;
 }
 
 const OptionCard: NextPage<Props> = (props) => {
 
-    const { title, label, imageURL, studentCount } = props;
+    const { title, label, imageURL, candidateCount } = props;
 
     return (
         <Card>
@@ -36,7 +36,7 @@ const OptionCard: NextPage<Props> = (props) => {
                 <Row>
                     <Col>
                         <Text color="#d1d1d1" size={18}>
-                            {studentCount} Students
+                            {candidateCount} candidatos
                         </Text>
                     </Col>
                     <Col>
@@ -48,7 +48,7 @@ const OptionCard: NextPage<Props> = (props) => {
                                     weight="bold"
                                     transform="uppercase"
                                 >
-                                    Enroll In Course
+                                    Ver más
                                 </Text>
                             </Button>
                         </Row>

@@ -20,7 +20,7 @@ const Login: NextPage = () => {
                 <div className={styles.textinput}>
                     <input className = {styles.input} type="password" placeholder="Password"/>
                 </div>
-                <Button href="/" className={styles.loginbtn} >LOGIN MANUAL</Button>
+                <Button href="/" className={styles.loginbtn} ><Link href="/" css={{"color": "white"}}>Inicio de Sesión</Link></Button>
                 
                 <div className={styles.googlebtn}>
                     <a href="/">

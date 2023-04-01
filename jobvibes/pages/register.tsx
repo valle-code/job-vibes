@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Link } from '@nextui-org/react';
+import { Link, Button} from '@nextui-org/react';
 import styles from './styles/register.module.css';
 
 const Login: NextPage = () => {
@@ -26,7 +26,7 @@ const Login: NextPage = () => {
                 <div className={styles.textinput}>
                     <input className = {styles.input} type="password" placeholder="Confirma tu contraseña"/>
                 </div>
-                <button className={styles.loginbtn}>REGISTRO DE USUARIO</button>
+                <Button className={styles.loginbtn}><Link href="/" css={{"color": "white"}}>REGISTRO DE USUARIO</Link></Button>
                 {/* Google Button */}
                 
                 <div className={styles.googlebtn}>

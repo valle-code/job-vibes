@@ -145,7 +145,7 @@
   
   .loginbtn:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px linear-gradient(to right, #89379c, #fa538d, #ff966d); ;
+    box-shadow: 0 0 20px linear-gradient(to right, #89379c, #fa538d, #ff966d); 
   }
 
 

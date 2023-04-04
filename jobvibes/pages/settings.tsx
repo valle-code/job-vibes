@@ -1,12 +1,9 @@
-import { useState } from 'react';
-import type { NextPage } from 'next';
-import { Container, Navbar, Text, Button, Grid, Col, Link} from '@nextui-org/react';
-import OptionCard from '../components/Index/OptionsCard';
-import Jumbotron from '../components/Index/Jumbotron';
-import Footer from '../components/Index/Footer';
+import { useState } from "react";
+import type { NextPage } from "next";
+import { Navbar, Text, Button, Link } from "@nextui-org/react";
+import styles from "./styles/settings.module.css";
 
 const Home: NextPage = () => {
-
   const collapseItems = [
     "Estadísticas",
     "Ofertas",
@@ -20,88 +17,99 @@ const Home: NextPage = () => {
   ];
 
   return (
-    <Container css={{"height": "100vh"}}>
-      {/* Navbar */}
-      <div style={{ width: "100%", backgroundColor: "white"}}>
-      <Navbar  variant="sticky">
-        <Navbar.Brand>
-          <Navbar.Toggle aria-label="toggle navigation" />
-          <Text b color="inherit" hideIn="xs" css={{"marginLeft": "30px"}}>
-            JobVibes
-          </Text>
-        </Navbar.Brand>
-        <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
-          <Navbar.Link href="#">Estadísticas</Navbar.Link>
-          <Navbar.Link href="#">Ofertas</Navbar.Link>
-          <Navbar.Link href="#">Ajustes</Navbar.Link>
-          <Navbar.Link href="#">Contacto</Navbar.Link>
-        </Navbar.Content>
-        <Navbar.Content>
-          <Navbar.Link color="inherit" href="login">
-            Login
-          </Navbar.Link>
-          <Navbar.Item>
-            <Button auto flat as={Link} href="register">
-              Sign Up
-            </Button>
-          </Navbar.Item>
-        </Navbar.Content>
-        <Navbar.Collapse>
-        {collapseItems.map((item, index) => (
-          <Navbar.CollapseItem key={item}>
-            <Link
-              color="inherit"
-              css={{
-                minWidth: "100%",
-              }}
-              href="#"
-            >
-              {item}
-            </Link>
-          </Navbar.CollapseItem>
-        ))}
-      </Navbar.Collapse>
-      </Navbar>
+    <>
+      <div style={{ width: "100%", backgroundColor: "white" }}>
+        <Navbar variant="sticky">
+          <Navbar.Brand>
+            <Navbar.Toggle aria-label="toggle navigation" />
+            <Text b color="inherit" hideIn="xs" css={{ marginLeft: "30px" }}>
+              JobVibes
+            </Text>
+          </Navbar.Brand>
+          <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
+            <Navbar.Link href="#">Estadísticas</Navbar.Link>
+            <Navbar.Link href="#">Ofertas</Navbar.Link>
+            <Navbar.Link href="#">Ajustes</Navbar.Link>
+            <Navbar.Link href="#">Contacto</Navbar.Link>
+          </Navbar.Content>
+          <Navbar.Content>
+            <Navbar.Link color="inherit" href="login">
+              Login
+            </Navbar.Link>
+            <Navbar.Item>
+              <Button auto flat as={Link} href="register">
+                Sign Up
+              </Button>
+            </Navbar.Item>
+          </Navbar.Content>
+          <Navbar.Collapse>
+            {collapseItems.map((item, index) => (
+              <Navbar.CollapseItem key={item}>
+                <Link
+                  color="inherit"
+                  css={{
+                    minWidth: "100%",
+                  }}
+                  href="#"
+                >
+                  {item}
+                </Link>
+              </Navbar.CollapseItem>
+            ))}
+          </Navbar.Collapse>
+        </Navbar>
       </div>
-      {/* Jumbotron */}
-      <div>
-        <Jumbotron text1="JobVibes" text2="Tu trabajo cuenta"/>
+      <div className={styles.sidenav}>
+        <div className={styles.profile}>
+          <img
+            className={styles.profileimg}
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+            alt=""
+            width="100"
+            height="100"
+          />
+          <div className={styles.name}>Daniel Valle</div>
+          <div className={styles.job}>Programador</div>
+        </div>
       </div>
-      {/* Cards */}
-      <Grid.Container gap={2}>
-        <Grid xs={12} sm={4}>
-          <OptionCard
-            label="Nueva oferta de trabajo"
-            title="Lorem ipsum dolor sit amet, consectetur"
-            imageURL="https://images.pexels.com/photos/3009793/pexels-photo-3009793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            candidateCount="3,500"
-          />
-        </Grid>
-        <Grid xs={12} sm={4}>
-          <OptionCard
-            label="Nueva oferta de trabajo"
-            title="Lorem ipsum dolor sit amet, consectetur"
-            imageURL="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            candidateCount="1,000"
-          />
-        </Grid>
-        <Grid xs={12} sm={4}>
-          <OptionCard
-            label="Nueva oferta de trabajo"
-            title="Lorem ipsum dolor sit amet, consectetur"
-            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            candidateCount="5,000"
-          />
-        </Grid>
-      </Grid.Container>
-      {/* Footer */}
-    <div style={{ width: "100%", backgroundColor: "white", marginRight: "30px"}}>
-      <Footer />
-    </div>
+      <div className={styles.main}>
+        <h2 className={styles.subtitle}>Identidad</h2>
+        <div className="card">
+          <div className="card-body">
+            <table className={styles.table}>
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  <td>:</td>
+                  <td>Daniel</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>:</td>
+                  <td>algo@gmail.com</td>
+                </tr>
+                <tr>
+                  <td>Trabajo</td>
+                  <td>:</td>
+                  <td>Programador</td>
+                </tr>
+                <tr>
+                  <td>Habilidades</td>
+                  <td>:</td>
+                  <td>Soy un inútil</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    </Container>   
-    
-  )
-}
+        <h2>No sé</h2>
+        <div className="card">
+          <div className="card-body"></div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default Home
+export default Home;

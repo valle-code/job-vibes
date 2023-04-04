@@ -88,11 +88,11 @@ body {
   height: 100vh;
   max-width: 160vw;
   overflow-x: hidden;
+  background: linear-gradient(to bottom right, #ff966d, #fa538d, #89379c);
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom right, #ff966d, #fa538d, #89379c);
   width: 100vw;
 }
 

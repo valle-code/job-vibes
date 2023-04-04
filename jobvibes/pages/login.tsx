@@ -15,10 +15,10 @@ const Login: NextPage = () => {
             <div className={styles.login}>
                 <h3 className={styles.title}>Inicio de Sesión</h3>
                 <div className={styles.textinput}>
-                    <input className = {styles.input} type="text" placeholder="Username"/>
+                    <input className = {styles.input} type="text" placeholder="Nombre de usuario"/>
                 </div>
                 <div className={styles.textinput}>
-                    <input className = {styles.input} type="password" placeholder="Password"/>
+                    <input className = {styles.input} type="password" placeholder="Contraseña"/>
                 </div>
                 <Button href="/" className={styles.loginbtn} ><Link href="/" css={{"color": "white"}}>Inicio de Sesión</Link></Button>
                 
@@ -30,7 +30,7 @@ const Login: NextPage = () => {
                     <p className={styles.btntext}><b>Inicia sesión con Google</b></p>
                     </a>
                 </div>
-                    <Link className={styles.forgot} href="recupera-contrasena">
+                    <Link className={styles.forgot} href="recoverpsw">
                         ¿Olvidaste tu contraseña?
                     </Link>
                 <div className={styles.create}>

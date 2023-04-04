@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { Link, Button} from '@nextui-org/react';
 import styles from './styles/register.module.css';
 
-const Login: NextPage = () => {
+const Register: NextPage = () => {
   return (
     <div className={styles.wrapper}>
         <div className={styles.container}>
@@ -26,7 +26,7 @@ const Login: NextPage = () => {
                 <div className={styles.textinput}>
                     <input className = {styles.input} type="password" placeholder="Confirma tu contraseña"/>
                 </div>
-                <Button className={styles.loginbtn}><Link href="/" css={{"color": "white"}}>REGISTRO DE USUARIO</Link></Button>
+                <Button className={styles.loginbtn}><Link href="userverification" css={{"color": "white"}}>Registro de Usuario</Link></Button>
                 {/* Google Button */}
                 
                 <div className={styles.googlebtn}>
@@ -49,4 +49,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+export default Register

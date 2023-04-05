@@ -73,29 +73,25 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className={styles.main}>
-        <h2 className={styles.subtitle}>Identidad</h2>
-        <div className="card">
-          <div className="card-body">
+        <h2 className={styles.subtitle}>Sobre mi</h2>
+        <div className={styles.card}>
+          <div className={styles.cardbody}>
             <table className={styles.table}>
               <tbody>
                 <tr>
-                  <td>Name</td>
-                  <td>:</td>
+                  <td>Nombre:</td>
                   <td>Daniel</td>
                 </tr>
                 <tr>
-                  <td>Email</td>
-                  <td>:</td>
+                  <td>Email:</td>
                   <td>algo@gmail.com</td>
                 </tr>
                 <tr>
-                  <td>Trabajo</td>
-                  <td>:</td>
+                  <td>Trabajo:</td>
                   <td>Programador</td>
                 </tr>
                 <tr>
-                  <td>Habilidades</td>
-                  <td>:</td>
+                  <td>Habilidades:</td>
                   <td>Soy un inútil</td>
                 </tr>
               </tbody>
@@ -103,10 +99,75 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <h2>No sé</h2>
-        <div className="card">
-          <div className="card-body"></div>
+        <h2 className={styles.subtitle}>Ajustes de usuario</h2>
+        <div className={styles.card}>
+          <div className={styles.cardbody}>
+            <table className={styles.table}>
+              <tbody>
+                <tr>
+                  <td>Sector deseado:</td>
+                  <td>
+                    <select className={styles.textinput}>
+                      <option value="sector1">Sector 1</option>
+                      <option value="sector2">Sector 2</option>
+                      <option value="sector3">Sector 3</option>
+                      <option value="sector1">Sector 1</option>
+                      <option value="sector2">Sector 2</option>
+                      <option value="sector3">Sector 3</option>
+                      <option value="sector1">Sector 1</option>
+                      <option value="sector2">Sector 2</option>
+                      <option value="sector3">Sector 3</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Años de experiencia:</td>
+                  <td>
+                    <div className={styles.textinput}>
+                      <input className={styles.input} type="text" placeholder="Número" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Rango salarial deseado:</td>
+                  <td>
+                    <div className={styles.expand}>
+                      <div className={styles.textinput}>
+                        <input className={styles.input} type="text" placeholder="Mínimo" />
+                      </div>
+                      <div className={styles.textinput}>
+                        <input className={styles.input} type="text" placeholder="Máximo" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Comunidad autónoma:</td>
+                  <td>
+                    <select className={styles.textinput}>
+                      <option value="comunidad1">Comunidad 1</option>
+                      <option value="comunidad2">Comunidad 2</option>
+                      <option value="comunidad3">Comunidad 3</option>
+                      <option value="comunidad1">Comunidad 1</option>
+                      <option value="comunidad2">Comunidad 2</option>
+                      <option value="comunidad3">Comunidad 3</option>
+                      <option value="comunidad1">Comunidad 1</option>
+                      <option value="comunidad2">Comunidad 2</option>
+                      <option value="comunidad3">Comunidad 3</option>
+                      <option value="comunidad1">Comunidad 1</option>
+                      <option value="comunidad2">Comunidad 2</option>
+                      <option value="comunidad3">Comunidad 3</option>
+                      <option value="comunidad1">Comunidad 1</option>
+                      <option value="comunidad2">Comunidad 2</option>
+                      <option value="comunidad3">Comunidad 3</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+        <Button size="md" shadow color="secondary" className={styles.btnSave} css={{ width: "100%", marginTop: "10px", boxShadow: "0px 8px 24px rgba(255, 0, 0, 0.2)", textSize:"30px" }}>Guardar</Button>
       </div>
     </>
   );

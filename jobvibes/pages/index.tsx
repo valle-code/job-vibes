@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
           <Navbar.Link href="#">Estadísticas</Navbar.Link>
           <Navbar.Link href="#">Ofertas</Navbar.Link>
-          <Navbar.Link href="#">Ajustes</Navbar.Link>
+          <Navbar.Link href="settings">Ajustes</Navbar.Link>
           <Navbar.Link href="#">Contacto</Navbar.Link>
         </Navbar.Content>
         <Navbar.Content>

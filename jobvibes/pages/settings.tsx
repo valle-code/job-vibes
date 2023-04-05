@@ -4,16 +4,48 @@ import { Navbar, Text, Button, Link } from "@nextui-org/react";
 import styles from "./styles/settings.module.css";
 
 const Home: NextPage = () => {
-  const collapseItems = [
-    "Estadísticas",
-    "Ofertas",
-    "Ajustes",
-    "Contacto",
-    "Legal",
-    "Sobre Nostros",
-    "Ayuda & Feedback",
-    "Login",
-    "Sign Up",
+  interface CollapseItem {
+    name: string;
+    link: string;
+  }
+
+  const collapseItems: CollapseItem[] = [
+    {
+      name: "Estadísticas",
+      link: "estadisticas"
+    },
+    {
+      name: "Ofertas",
+      link: "ofertas"
+    },
+    {
+      name: "Ajustes",
+      link: "settings"
+    },
+    {
+      name: "Contacto",
+      link: "contacto"
+    },
+    {
+      name: "Legal",
+      link: "legal"
+    },
+    {
+      name: "Sobre Nostros",
+      link: "sobre-nosotros"
+    },
+    {
+      name: "Ayuda & Feedback",
+      link: "ayuda-feedback"
+    },
+    {
+      name: "Login",
+      link: "login"
+    },
+    {
+      name: "Sign Up",
+      link: "register"
+    },
   ];
 
   return (
@@ -22,14 +54,14 @@ const Home: NextPage = () => {
         <Navbar variant="sticky">
           <Navbar.Brand>
             <Navbar.Toggle aria-label="toggle navigation" />
-            <Text b color="inherit" hideIn="xs" css={{ marginLeft: "30px" }}>
-              JobVibes
+            <Text b color="inherit" hideIn="xs" css={{ "marginLeft": "30px" }}>
+              <a href="/">JobVibes</a>
             </Text>
           </Navbar.Brand>
           <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
             <Navbar.Link href="#">Ofertas</Navbar.Link>
-            <Navbar.Link href="#">Ajustes</Navbar.Link>
+            <Navbar.Link href="settings">Ajustes</Navbar.Link>
             <Navbar.Link href="#">Contacto</Navbar.Link>
           </Navbar.Content>
           <Navbar.Content>
@@ -44,15 +76,15 @@ const Home: NextPage = () => {
           </Navbar.Content>
           <Navbar.Collapse>
             {collapseItems.map((item, index) => (
-              <Navbar.CollapseItem key={item}>
+              <Navbar.CollapseItem key={index}>
                 <Link
                   color="inherit"
                   css={{
                     minWidth: "100%",
                   }}
-                  href="#"
+                  href={item.link}
                 >
-                  {item}
+                  {item.name}
                 </Link>
               </Navbar.CollapseItem>
             ))}

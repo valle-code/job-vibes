@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
-import { Navbar, Text, Button, Grid, Col, Link } from '@nextui-org/react';
-import OptionCard from '../components/Index/OptionsCard';
+import { Navbar, Text, Button, Grid, Link } from '@nextui-org/react';
+import JobOffer from '../components/Joboffers/JobOffer';
 import Footer from '../components/Index/Footer';
-import styles from './styles/jumbotron.module.css';
+import styles from './styles/joboffers.module.css';
+
 
 const Home: NextPage = () => {
 
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
     },
     {
       name: "Ofertas",
-      link: "ofertas"
+      link: "joboffers"
     },
     {
       name: "Ajustes",
@@ -52,7 +53,7 @@ const Home: NextPage = () => {
   ];
 
   return (
-    <div style={{ "height": "100vh", width:"100%" }}>
+    <div style={{ "height": "100vh", width: "100%" }}>
       {/* Navbar */}
       <div style={{ width: "100%", backgroundColor: "white" }}>
         <Navbar variant="sticky">
@@ -95,43 +96,81 @@ const Home: NextPage = () => {
           </Navbar.Collapse>
         </Navbar>
       </div>
-      {/* Jumbotron */}
-      <Grid.Container justify="center" css={{"height": "400px", 
-      "width": "99%",
-      "borderRadius": "10px", 
-       "backgrounImage": "url(/jumboton.png)",
-      "marginLeft": "10px",
-      "marginTop": "20px",
-      "marginBottom": "20px"}}
-      >
-        <Grid xs={12} sm={5} alignItems="center">
-          <Col css={{"width": "100%"}}>
-            <Text weight={"bold"} size={70} css={{"textAlign": "center", "color": "white"} }>JobVibes</Text>
-            <Text weight={"bold"} size={65} css={{"textAlign": "center", "color": "white", "width": "100%"}}>Tu trabajo cuenta</Text>
-            <Button className={styles.join} size="md" shadow color="primary" css={{ width: "100%", marginTop: "10px", boxShadow: "0px 8px 24px rgba(255, 0, 0, 0.2)" }}>Únete GRATIS Ahora</Button>
-          </Col>
-        </Grid>
-      </Grid.Container>
       {/* Cards */}
       <Grid.Container gap={2}>
-        <Grid xs={12} sm={4}>
-          <OptionCard
+        <>
+          <div className={styles.postSection}>
+            <div className={styles.commentBox}>
+              <div className={styles.userAvatar}>
+                <img className={styles.imgAvatar} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="Avatar del usuario" />
+              </div>
+              <div className={styles.commentForm}>
+                <textarea className={styles.textarea} placeholder="Escribe tu comentario aquí"></textarea>
+                <div className={styles.formActions}>
+                  <button className={`${styles.btn} ${styles.btnPublish}`}>Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+        <Grid xs={12} sm={3}>
+          <JobOffer
             label="Nueva oferta de trabajo"
             title="Lorem ipsum dolor sit amet, consectetur"
             imageURL="https://images.pexels.com/photos/3009793/pexels-photo-3009793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             candidateCount="3,500"
           />
         </Grid>
-        <Grid xs={12} sm={4}>
-          <OptionCard
+        <Grid xs={12} sm={3}>
+          <JobOffer
             label="Nueva oferta de trabajo"
             title="Lorem ipsum dolor sit amet, consectetur"
             imageURL="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             candidateCount="1,000"
           />
         </Grid>
-        <Grid xs={12} sm={4}>
-          <OptionCard
+        <Grid xs={12} sm={3}>
+          <JobOffer
+            label="Nueva oferta de trabajo"
+            title="Lorem ipsum dolor sit amet, consectetur"
+            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            candidateCount="5,000"
+          />
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <JobOffer
+            label="Nueva oferta de trabajo"
+            title="Lorem ipsum dolor sit amet, consectetur"
+            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            candidateCount="5,000"
+          />
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <JobOffer
+            label="Nueva oferta de trabajo"
+            title="Lorem ipsum dolor sit amet, consectetur"
+            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            candidateCount="5,000"
+          />
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <JobOffer
+            label="Nueva oferta de trabajo"
+            title="Lorem ipsum dolor sit amet, consectetur"
+            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            candidateCount="5,000"
+          />
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <JobOffer
+            label="Nueva oferta de trabajo"
+            title="Lorem ipsum dolor sit amet, consectetur"
+            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            candidateCount="5,000"
+          />
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <JobOffer
             label="Nueva oferta de trabajo"
             title="Lorem ipsum dolor sit amet, consectetur"
             imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -143,7 +182,9 @@ const Home: NextPage = () => {
       <div style={{ width: "100%", backgroundColor: "white", marginRight: "30px" }}>
         <Footer />
       </div>
+
     </div>
+
   )
 }
 

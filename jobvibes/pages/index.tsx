@@ -96,6 +96,7 @@ const Home: NextPage = () => {
         </Navbar>
       </div>
       {/* Jumbotron */}
+      
       <Grid.Container justify="center" css={{"height": "400px", 
       "width": "99%",
       "borderRadius": "10px", 
@@ -140,6 +141,7 @@ const Home: NextPage = () => {
         </Grid>
       </Grid.Container>
       {/* Footer */}
+      
       <div style={{ width: "100%", backgroundColor: "white", marginRight: "30px" }}>
         <Footer />
       </div>

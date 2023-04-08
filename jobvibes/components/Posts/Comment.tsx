@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 type CommentProps = {
   nombre: string;
@@ -8,48 +9,27 @@ type CommentProps = {
 }
 
 function Comment(props: CommentProps) {
-  const styles = {
-    comentario: {
-      display: 'flex',
-      alignItems: 'center',
-      marginBottom: '20px',
-    },
-    fotoPerfil: {
-      width: '10px',
-      height: '10px',
-      borderRadius: '50%',
-      marginRight: '10px',
-    },
-    contenido: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-    },
-    nombre: {
-      fontWeight: 'bold',
-      marginBottom: '5px',
-    },
-    texto: {
-      fontSize: '14px',
-      marginBottom: '5px',
-    },
-    fecha: {
-      fontSize: '12px',
-      color: 'gray',
-    },
-  };
-
   return (
-    <div style={styles.comentario}>
-      <div style={styles.fotoPerfil}>
-        <img src={props.fotoPerfil} alt="Foto de perfil" />
-      </div>
-      <div style={styles.contenido}>
-        <div style={styles.nombre}>{props.nombre}</div>
-        <div style={styles.texto}>{props.comentario}</div>
-        <div style={styles.fecha}>{props.fecha}</div>
-      </div>
+    <div className="d-flex flex-start mb-4">
+  <img className="rounded-circle shadow-1-strong me-3"
+    src={props.fotoPerfil} alt="avatar" width="60"
+    height="60" />
+  <div>
+    <h6 className="fw-bold mb-1">{props.nombre}</h6>
+    <div className="d-flex align-items-center mb-3">
+      <p className="mb-0">
+        {props.fecha}
+      </p>
+      <a href="#!" className="link-muted"><i className="fas fa-pencil-alt ms-2"></i></a>
+      <a href="#!" className="link-muted"><i className="fas fa-redo-alt ms-2"></i></a>
+      <a href="#!" className="link-muted"><i className="fas fa-heart ms-2"></i></a>
     </div>
+    <p className="mb-0">
+      {props.comentario}
+    </p>
+  </div>
+</div>
+
   );
 }
 

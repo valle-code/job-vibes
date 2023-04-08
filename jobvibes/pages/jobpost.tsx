@@ -95,10 +95,10 @@ const Home: NextPage = () => {
         </Navbar>
       </div>
       {/* Job Post */}
-      <div className="title" style={{ width: "100%", marginTop: "20px"}}>
+      <div className="title" style={{ width: "100%", marginTop: "20px" }}>
         <h1 style={{ color: "white", textAlign: "center", fontSize: "45px" }}>Oferta de empleo: Se busca desarrollador junior</h1>
       </div>
-      
+
       <div style={{ backgroundColor: "white", width: "89%", height: "auto", color: "black", padding: "20px", marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "20px" }}>
         Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
 
@@ -110,7 +110,7 @@ const Home: NextPage = () => {
         "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
 
       </div>
-      <div style={{ backgroundColor: "white", width: "89%", height: "auto", color: "black", padding: "20px", marginTop: "20px", borderRadius: "20px"}}>
+      <div style={{ backgroundColor: "white", width: "89%", height: "auto", color: "black", padding: "20px", marginTop: "20px", borderRadius: "20px" }}>
         <h2 style={{ color: "black", textAlign: "left" }}>Multimedia</h2>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div className={styles.imageGallery}>
@@ -122,7 +122,38 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-
+      <div className="title" style={{ width: "89%", marginTop: "20px" }}>
+        <h1 style={{ color: "white", textAlign: "left", fontSize: "30px" }}>Comentarios</h1>
+      </div>
+      <div style={{ backgroundColor: "white", width: "89%", height: "auto", color: "black", padding: "20px", marginTop: "20px", display: "flex", flexDirection: "column", justifyContent: "center", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}>
+        <div className={styles.postSection}>
+          <div className={styles.commentBox}>
+            <div className={styles.userAvatar}>
+              <img className={styles.imgAvatar} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="Avatar del usuario" />
+            </div>
+            <div className={styles.commentForm}>
+              <textarea className={styles.textarea} placeholder="Escribe tu comentario aquí"></textarea>
+              <div className={styles.formActions}>
+                <button className={`${styles.btn} ${styles.btnPublish}`}>Publicar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="commentSection">
+          <Comment
+            nombre="Daniel Valle"
+            fotoPerfil="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+            comentario="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+            fecha="8/4/2023"
+          />
+          <Comment
+            nombre="Daniel Valle"
+            fotoPerfil="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+            comentario="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+            fecha="8/4/2023"
+          />
+        </div>
+      </div>
 
     </div>
   )

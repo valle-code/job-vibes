@@ -23,12 +23,10 @@ const Login: NextPage = () => {
                 <Button href="/" className={styles.loginbtn} ><Link href="/" css={{"color": "white"}}>Inicio de Sesión</Link></Button>
                 
                 <div className={styles.googlebtn}>
-                    <a href="/">
                     <div className={styles.googleiconwrapper}>
                         <img className={styles.googleicon} src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
                     </div>
                     <p className={styles.btntext}><b>Inicia sesión con Google</b></p>
-                    </a>
                 </div>
                     <Link className={styles.forgot} href="recoverpsw">
                         ¿Olvidaste tu contraseña?

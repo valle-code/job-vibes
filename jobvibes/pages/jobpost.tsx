@@ -58,7 +58,7 @@ const Home: NextPage = () => {
           <Navbar.Brand>
             <Navbar.Toggle aria-label="toggle navigation" />
             <Text b color="inherit" hideIn="xs" css={{ "marginLeft": "30px" }}>
-              <a href="/">JobVibes</a>
+            <Link css={{ "color": "Black" }} href="/">JobVibes</Link>
             </Text>
           </Navbar.Brand>
           <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">

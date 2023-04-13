@@ -10,8 +10,8 @@
 }
 
 .container {
-    width: 50vw;
-    height: 60vh;
+    width: 60vw;
+    height: 70vh;
     display: grid;
     grid-template-columns: 100%;
     grid-template-areas: "login";
@@ -80,6 +80,7 @@
     justify-content: center;
     position: relative;
     background: white;
+    
 }
 
 .title {
@@ -266,4 +267,12 @@
     .design {
         display: block;
     }
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

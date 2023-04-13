@@ -1,8 +1,25 @@
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import {Button, Link} from '@nextui-org/react';
 import styles from './styles/login.module.css';
+import axios from 'axios';
 
 const Login: NextPage = () => {
+    const [loginUsername, setLoginUsername] = useState<string>('');
+    const [loginPassword, setLoginPassword] = useState<string>('');
+
+    const login = (loginUsername: string, loginPassword: string) => {
+        axios({
+            method: 'post',
+            data: {
+              username: loginUsername,
+              password: loginPassword
+            },
+            withCredentials: true,
+            url: 'http://localhost:3001/login'
+          }).then(res => {console.log(res)}).catch(err => {console.log(err)})
+    }
+
   return (
     <div className={styles.wrapper}>
         <div className={styles.container}>
@@ -15,12 +32,12 @@ const Login: NextPage = () => {
             <div className={styles.login}>
                 <h3 className={styles.title}>Inicio de Sesión</h3>
                 <div className={styles.textinput}>
-                    <input className = {styles.input} type="text" placeholder="Nombre de usuario"/>
+                    <input className = {styles.input} type="text" name="loginUsername" placeholder="Nombre de usuario" onChange={e => setLoginUsername(e.target.value)}/>
                 </div>
                 <div className={styles.textinput}>
-                    <input className = {styles.input} type="password" placeholder="Contraseña"/>
+                    <input className = {styles.input} type="password" name="loginPassword" placeholder="Contraseña" onChange={e => setLoginPassword(e.target.value)}/>
                 </div>
-                <Button href="/" className={styles.loginbtn} ><Link href="/" css={{"color": "white"}}>Inicio de Sesión</Link></Button>
+                <button onClick={() => login(loginUsername, loginPassword)} className={styles.loginbtn} ><p style={{"color": "white"}}>Inicio de Sesión</p></button>
                 
                 <div className={styles.googlebtn}>
                     <div className={styles.googleiconwrapper}>

@@ -10,8 +10,8 @@
 }
 
 .container {
-    width: 50vw;
-    height: 60vh;
+    width: 60vw;
+    height: 70vh;
     display: grid;
     grid-template-columns: 100%;
     grid-template-areas: "login";

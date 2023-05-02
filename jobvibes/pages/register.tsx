@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { Link, Button } from '@nextui-org/react';
 import styles from './styles/register.module.css';
 import axios from 'axios';
+import {signIn} from 'next-auth/react';
 
 const Register: NextPage = () => {
 
@@ -53,12 +54,12 @@ const Register: NextPage = () => {
 
                     {/* Google Button */}
 
-                    <div className={styles.googlebtn}>
+                    <button type="button" onClick={() => signIn("google")} className={styles.googlebtn}>
                         <div className={styles.googleiconwrapper}>
                             <img className={styles.googleicon} src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
                         </div>
                         <p className={styles.btntext}><b>Inicia sesión con Google</b></p>
-                    </div>
+                    </button>
                     <Link className={styles.forgot} href="recupera-contrasena">
                         ¿Olvidaste tu contraseña?
                     </Link>

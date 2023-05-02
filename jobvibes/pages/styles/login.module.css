@@ -155,6 +155,7 @@
   }
 
 
+  /* google button */
   .googlebtn {
     width: 68%;
     height: 42px;
@@ -165,9 +166,12 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
+    border: none;
   }
   
   .googlebtn .googleiconwrapper {
+    display: flex;
+    justify-content: center;
     position: absolute;
     margin-top: 1px;
     margin-left: 1px;
@@ -181,7 +185,6 @@
   .googlebtn .googleicon {
     position: absolute;
     margin-top: 11px;
-    margin-left: 11px;
     width: 18px;
     height: 18px;
   }
@@ -207,7 +210,6 @@
   .googlebtn:active {
     background: #1669F2;
   }
-  
   
 
   

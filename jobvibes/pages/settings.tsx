@@ -1,9 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import { Navbar, Text, Button, Link } from "@nextui-org/react";
 import styles from "./styles/settings.module.css";
+import axios from "axios";
+import User from "./api/Models/User";
+import { useRouter } from 'next/router';
+
 
 const Home: NextPage = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+
+  const logout = () => {
+    axios({
+      method: "post",
+      withCredentials: true,
+      url: "http://localhost:3001/logout",
+    })
+      .then(() => {
+        setUser(null); // or any other way you manage user authentication state
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getUser = () => {
+    axios({
+      method: "get",
+      withCredentials: true,
+      url: "http://localhost:3001/getUser",
+    })
+      .then((res) => {
+        const userData = res.data;
+        const usuario = new User(userData.username, userData.password);
+        console.log(usuario.username, usuario.password)
+        if (userData.username !== undefined) {
+          setUser(usuario);
+        } else {
+          setUser(null);
+          router.push('/login');
+        }
+       
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+
+  }, []);
+
   interface CollapseItem {
     name: string;
     link: string;
@@ -51,29 +100,45 @@ const Home: NextPage = () => {
   return (
     <>
       <div style={{ width: "100%", backgroundColor: "white" }}>
-        <Navbar variant="sticky">
+      <Navbar variant="sticky">
           <Navbar.Brand>
             <Navbar.Toggle aria-label="toggle navigation" />
-            <Text b color="inherit" hideIn="xs" css={{ "marginLeft": "30px" }}>
-              <Link css={{ "color": "Black" }} href="/">JobVibes</Link>
+            <Text b color="inherit" hideIn="xs" css={{ marginLeft: "30px" }}>
+              <Link css={{ color: "Black" }} href="/">
+                JobVibes
+              </Link>
             </Text>
           </Navbar.Brand>
           <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
-            <Navbar.Link href="#">Ofertas</Navbar.Link>
+            <Navbar.Link href="joboffers">Ofertas</Navbar.Link>
             <Navbar.Link href="settings">Ajustes</Navbar.Link>
             <Navbar.Link href="#">Contacto</Navbar.Link>
           </Navbar.Content>
           <Navbar.Content>
-            <Navbar.Link color="inherit" href="login">
-              Login
-            </Navbar.Link>
-            <Navbar.Item>
-              <Button auto flat as={Link} href="register">
-                Sign Up
-              </Button>
-            </Navbar.Item>
+            {user ? (
+              <>
+                <Navbar.Item>
+                  <Button auto flat as={Link} onClick={() => logout()}>
+                    Cerrar sesión
+                  </Button>
+                </Navbar.Item>
+                <Text color="inherit">Bienvenido, {user.username}</Text>
+              </>
+            ) : (
+              <>
+                <Navbar.Link color="inherit" href="login">
+                  Login
+                </Navbar.Link>
+                <Navbar.Item>
+                  <Button auto flat as={Link} href="register">
+                    Sign Up
+                  </Button>
+                </Navbar.Item>
+              </>
+            )}
           </Navbar.Content>
+
           <Navbar.Collapse>
             {collapseItems.map((item, index) => (
               <Navbar.CollapseItem key={index}>

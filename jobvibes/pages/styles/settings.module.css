@@ -2,9 +2,9 @@
 .sidenav {
     background-color: white;
     color: #333;
-    height: 900px;
+    height: 100%;
     left: 0;
-    overflow-x: hidden;
+    
     padding-top: 50px;
     position: fixed;
     width: 250px;

@@ -96,6 +96,10 @@ const Home: NextPage = () => {
       name: "Sign Up",
       link: "register",
     },
+    {
+      name: "Dashboard",
+      link: "dashboard",
+    },
   ];
 
   return (
@@ -115,7 +119,7 @@ const Home: NextPage = () => {
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
             <Navbar.Link href="joboffers">Ofertas</Navbar.Link>
             <Navbar.Link href="settings">Ajustes</Navbar.Link>
-            <Navbar.Link href="#">Contacto</Navbar.Link>
+            <Navbar.Link href="dashboard">Dashboard</Navbar.Link>
           </Navbar.Content>
           <Navbar.Content>
             {user ? (

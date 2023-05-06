@@ -13,12 +13,16 @@ import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import User from "./api/Models/User";
+import JobOfferData from './api/Models/JobOffer';
 
 
 
 const DashBoard: NextPage = () => {
     const [user, setUser] = useState<User | null>(null);
     const [users, setUsers] = useState<User[]>([]);
+    const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
+    const [numBannedUsers, setNumBannedUsers] = useState(0);
+    
     let userDataList: User[] = [];
 
     const getUser = () => {
@@ -79,7 +83,38 @@ const DashBoard: NextPage = () => {
     };
 
 
+    const getUsuariosBaneados =  () => { return users.filter((user) => user.bannedRole === 1).length;}
 
+    const getJobOffers = () => {
+        axios({
+          method: "get",
+          withCredentials: true,
+          url: "http://localhost:3001/getJobOffer",
+        })
+        .then((res) => {
+          const jobOffersData = res.data.map((row: any) => new JobOfferData(row.jobDetails, row.creationDate));
+          setJobOffers(jobOffersData);
+        })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+    const handleDelete = (id: number) => {
+        axios({
+            method: "delete",
+            withCredentials: true,
+            url: `http://localhost:3001/deleteUser/${id}`,
+        })
+            .then((res) => {
+                console.log(res);
+                getAllUsers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    
 
 
 
@@ -87,7 +122,7 @@ const DashBoard: NextPage = () => {
         // Llamada a la función getUser al cargar el componente
         getUser();
         getAllUsers();
-        console.log(users.length);
+        getJobOffers();
     }, []);
 
     const userElements = [];
@@ -143,7 +178,7 @@ const DashBoard: NextPage = () => {
                     <div className={styles.card}>
                         <div className="card-content">
                             <div className={styles.number}>{users.length}</div>
-                            <div className={styles.cardname}>Nuevos Usuarios</div>
+                            <div className={styles.cardname}>Usuarios registrados</div>
                         </div>
                         <div className="icon-box">
                             <i className="fas fa-briefcase-medical"></i>
@@ -160,14 +195,15 @@ const DashBoard: NextPage = () => {
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
-                            <div className={styles.number}>5</div>
-                            <div className={styles.cardname}>Usuarios Baneados</div>
+                            <div className={styles.number}>{getUsuariosBaneados()}</div>
+                            
+                            <div className={styles.cardname}>{getUsuariosBaneados() === 1 ? "Usuario Baneado" : "Usuarios Baneados"}</div>
                         </div>
                        
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
-                            <div className={styles.number}>40</div>
+                            <div className={styles.number}>{jobOffers.length}</div>
                             <div className={styles.cardname}>Ofertas de Trabajo</div>
                         </div>
                         <div className="icon-box">
@@ -201,8 +237,8 @@ const DashBoard: NextPage = () => {
                                             <td className={styles.field}>{user.username}</td>
                                             <td className={styles.field}>{user.email}</td>
                                             <td className={styles.field}>{user.adminRole === 1 ? "Admin" : "Usuario"}</td>
-                                            <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                            <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
+                                            <td className={styles.field}><button className={styles.btn}>{user.bannedRole === 1 ? <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', color: "red"}} /> : <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px',}}/>}</button></td>
+                                            <td className={styles.field}><button onClick={() => handleDelete(user.id)} className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
                                         </tr>
                                     ))
                                 ) : null}

@@ -167,6 +167,27 @@ app.get('/getUsers', (req, res) => {
   });
 });
 
+app.delete('/deleteUser/:id', (req, res) => {
+  const userId = req.params.id;
+  const deletequery = "DELETE FROM `users` WHERE id = ?";
+
+  db.query(deletequery, [userId], (err, result) => {
+    if (err) {
+      console.error('Error en la eliminación del usuario con id ' + userId + ': ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (result.affectedRows === 0) {
+      res.send('El usuario con id ' + userId + ' no existe');
+      return;
+    }
+
+    res.send('Usuario con id ' + userId + ' eliminado exitosamente');
+  });
+});
+
+
 
 
 

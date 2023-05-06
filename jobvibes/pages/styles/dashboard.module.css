@@ -41,8 +41,9 @@
     text-align: center;
 }
 .sidebar .title {
-    padding: 0 10px;
-    font-size: 20px;
+    padding: 5px 10px;
+    font-size: 15px;
+    margin-left: 5px;
 }
 .main {
     position: absolute;
@@ -81,11 +82,15 @@
     color: black;
     border-radius: 20px;
 }
-.search i {
+.search .btn {
     position: absolute;
     right: 15px;
     top: 10px;
     cursor: pointer;
+}
+
+.search .btn:hover {
+    color: #ff966d;
 }
 .user {
     position: relative;
@@ -216,6 +221,10 @@
         text-align: center; /* Actualizamos la propiedad */
         color: #000000;
         flex-grow: 1;
+    }
+
+    .title:hover {
+        text-decoration: underline;
     }
   
     .btn:hover {

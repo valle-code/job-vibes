@@ -33,7 +33,7 @@ const Home: NextPage = () => {
     })
       .then((res) => {
         const userData = res.data;
-        const usuario = new User(userData.username, userData.password);
+        const usuario = new User(userData.id, userData.username, userData.password, userData.email, userData.userRole, userData.adminRole, userData.bannedRole);
         console.log(usuario.username, usuario.password)
         if (userData.username !== undefined) {
           setUser(usuario);

@@ -14,7 +14,95 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import User from "./api/Models/User";
 
+
+
 const DashBoard: NextPage = () => {
+    const [user, setUser] = useState<User | null>(null);
+    const [users, setUsers] = useState<User[]>([]);
+    let userDataList: User[] = [];
+
+    const getUser = () => {
+        axios({
+            method: "get",
+            withCredentials: true,
+            url: "http://localhost:3001/getUser",
+        })
+            .then((res) => {
+                const userData = res.data;
+                const usuario = new User(userData.id, userData.username, userData.password, userData.email, userData.userRole, userData.adminRole, userData.bannedRole);
+                console.log(usuario.id, usuario.username, usuario.password, usuario.userRole, usuario.adminRole, usuario.bannedRole)
+                if (userData.username !== undefined) {
+                    setUser(usuario);
+                } else {
+                    setUser(null);
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const logout = () => {
+        axios({
+            method: "post",
+            withCredentials: true,
+            url: "http://localhost:3001/logout",
+        })
+            .then(() => {
+                setUser(null); // or any other way you manage user authentication state
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const getAllUsers = () => {
+        axios.get<User[]>("http://localhost:3001/getUsers", { withCredentials: true })
+            .then((response) => {
+                const usersData = response.data.map((user) => {
+                    return {
+                        id: user.id,
+                        username: user.username,
+                        password: user.password,
+                        email: user.email,
+                        userRole: user.userRole,
+                        adminRole: user.adminRole,
+                        bannedRole: user.bannedRole
+                    };
+                });
+                setUsers(usersData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+
+
+
+
+
+    useEffect(() => {
+        // Llamada a la función getUser al cargar el componente
+        getUser();
+        getAllUsers();
+        console.log(users.length);
+    }, []);
+
+    const userElements = [];
+    for (let i = 0; i < userDataList.length; i++) {
+        userElements.push(
+            <tr className={styles.fields}>
+                <td className={styles.field}>Daniel</td>
+                <td className={styles.field}>Daniel</td>
+                <td className={styles.field}>Daniel</td>
+                <td className={styles.field}>Daniel</td>
+                <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
+                <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
+            </tr>
+        );
+    }
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>
@@ -54,7 +142,7 @@ const DashBoard: NextPage = () => {
                 <div className={styles.cards}>
                     <div className={styles.card}>
                         <div className="card-content">
-                            <div className={styles.number}>20</div>
+                            <div className={styles.number}>{users.length}</div>
                             <div className={styles.cardname}>Nuevos Usuarios</div>
                         </div>
                         <div className="icon-box">
@@ -75,9 +163,7 @@ const DashBoard: NextPage = () => {
                             <div className={styles.number}>5</div>
                             <div className={styles.cardname}>Usuarios Baneados</div>
                         </div>
-                        <div className="icon-box">
-                            <i className="fas fa-briefcase-medical"></i>
-                        </div>
+                       
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
@@ -108,15 +194,19 @@ const DashBoard: NextPage = () => {
                                 </tr>
                             </thead>
                             <tbody className={styles.tableBody}>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                               
+                                {users ? (
+                                    users.map((user) => (
+                                        <tr className={styles.fields}>
+                                            <td className={styles.field}>{user.id}</td>
+                                            <td className={styles.field}>{user.username}</td>
+                                            <td className={styles.field}>{user.email}</td>
+                                            <td className={styles.field}>{user.adminRole === 1 ? "Admin" : "Usuario"}</td>
+                                            <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
+                                            <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
+                                        </tr>
+                                    ))
+                                ) : null}
+
                             </tbody>
                         </table>
 

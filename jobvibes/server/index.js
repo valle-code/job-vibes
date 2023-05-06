@@ -131,8 +131,8 @@ app.get('/getJobOffer', (req, res) => {
 
 app.get('/getUser', (req, res) => {
   if (req.user) {
-    const { username, password } = req.user;
-    res.send({ username, password });
+    const {id, username, password, userRole, adminRole, bannedRole} = req.user;
+    res.send({ id, username, password, userRole, adminRole, bannedRole});
   } else {
     res.send(null);
   }

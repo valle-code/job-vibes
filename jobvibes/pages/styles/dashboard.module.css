@@ -220,8 +220,9 @@
   }
 
     .field  {
-        text-align: center; /* Actualizamos la propiedad */
+        text-align: center;
         color: #000000;
+        flex-basis: 20%;
         flex-grow: 1;
     }
 

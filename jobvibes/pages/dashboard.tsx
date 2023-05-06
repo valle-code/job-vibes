@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import type { NextPage } from "next";
-import { Navbar, Text, Button, Grid, Col, Link } from "@nextui-org/react";
-import OptionCard from "../components/Index/OptionsCard";
-import Footer from "../components/Index/Footer";
 import styles from "./styles/dashboard.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faTh } from '@fortawesome/free-solid-svg-icons'
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +17,7 @@ const DashBoard: NextPage = () => {
     const [user, setUser] = useState<User | null>(null);
     const [users, setUsers] = useState<User[]>([]);
     const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
-    const [numBannedUsers, setNumBannedUsers] = useState(0);
+    
     
     let userDataList: User[] = [];
 
@@ -114,6 +110,22 @@ const DashBoard: NextPage = () => {
                 console.log(err);
             });
     }
+
+    const handleBan = (id: number) => {
+        axios({
+            method: "put",
+            withCredentials: true,
+            url: `http://localhost:3001/banUser/${id}`,
+        })
+            .then((res) => {
+                console.log(res);
+                getAllUsers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
     
 
 
@@ -125,19 +137,7 @@ const DashBoard: NextPage = () => {
         getJobOffers();
     }, []);
 
-    const userElements = [];
-    for (let i = 0; i < userDataList.length; i++) {
-        userElements.push(
-            <tr className={styles.fields}>
-                <td className={styles.field}>Daniel</td>
-                <td className={styles.field}>Daniel</td>
-                <td className={styles.field}>Daniel</td>
-                <td className={styles.field}>Daniel</td>
-                <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-            </tr>
-        );
-    }
+    
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>
@@ -187,7 +187,7 @@ const DashBoard: NextPage = () => {
                     <div className={styles.card}>
                         <div className="card-content">
                             <div className={styles.number}>1</div>
-                            <div className={styles.cardname}>Aministrador Conectado</div>
+                            <div className={styles.cardname}>Administrador Conectado</div>
                         </div>
                         <div className="icon-box">
                             <i className="fas fa-briefcase-medical"></i>
@@ -237,7 +237,7 @@ const DashBoard: NextPage = () => {
                                             <td className={styles.field}>{user.username}</td>
                                             <td className={styles.field}>{user.email}</td>
                                             <td className={styles.field}>{user.adminRole === 1 ? "Admin" : "Usuario"}</td>
-                                            <td className={styles.field}><button className={styles.btn}>{user.bannedRole === 1 ? <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', color: "red"}} /> : <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px',}}/>}</button></td>
+                                            <td className={styles.field}><button onClick={() => handleBan(user.id)} className={styles.btn}>{user.bannedRole === 1 ? <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', color: "red"}} /> : <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px',}}/>}</button></td>
                                             <td className={styles.field}><button onClick={() => handleDelete(user.id)} className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
                                         </tr>
                                     ))

@@ -187,6 +187,44 @@ app.delete('/deleteUser/:id', (req, res) => {
   });
 });
 
+app.put('/banUser/:id', (req, res) => {
+  const userId = req.params.id;
+  const selectQuery = "SELECT * FROM `users` WHERE id = ?";
+  
+  db.query(selectQuery, [userId], (err, rows) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT * FROM `users`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (rows.length === 0) {
+      res.send('El usuario con id ' + userId + ' no existe');
+      return;
+    }
+
+    const user = rows[0];
+    const isBanned = user.bannedRole;
+
+    const updateQuery = "UPDATE `users` SET bannedRole = ? WHERE id = ?";
+    db.query(updateQuery, [!isBanned, userId], (err, result) => {
+      if (err) {
+        console.error('Error en la ejecución de la consulta, UPDATE `users` SET bannedRole: ', err);
+        res.status(500).send('Error executing query');
+        return;
+      }
+
+      if (result.affectedRows === 0) {
+        res.send('El usuario con id ' + userId + ' no existe');
+        return;
+      }
+
+      const action = isBanned ? 'desbanneado' : 'baneado';
+      res.send('El usuario con id ' + userId + ' ha sido ' + action);
+    });
+  });
+});
+
 
 
 

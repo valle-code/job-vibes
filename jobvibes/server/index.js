@@ -138,6 +138,35 @@ app.get('/getUser', (req, res) => {
   }
 });
 
+app.get('/getUsers', (req, res) => {
+  const selectquery = "SELECT * FROM `users`";
+  db.query(selectquery, (err, rows) => {
+
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT * FROM `users`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (rows.length === 0) {
+      res.send([]);
+      return;
+    }
+
+    const userData = rows.map(row => ({
+      id: row.id,
+      email: row.email,
+      username: row.username,
+      password: row.password,
+      userRole: row.userRole,
+      adminRole: row.adminRole,
+      bannedRole: row.bannedRole
+    }));
+
+    res.send(userData);
+  });
+});
+
 
 
 

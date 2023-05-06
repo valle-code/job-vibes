@@ -36,7 +36,10 @@ module.exports = function(passport) {
             const userInfo = {
                 id: rows[0].id,
                 username: rows[0].username,
-                password: rows[0].password
+                password: rows[0].password,
+                userRole: rows[0].userRole,
+                adminRole: rows[0].adminRole,
+                bannedRole: rows[0].bannedRole
             }
             done(null, userInfo);
         })

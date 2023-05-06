@@ -98,6 +98,7 @@ const DashBoard: NextPage = () => {
                         <table className={styles.usertable}>
                             <thead className={styles.tableHeader}>
                                 <tr className={styles.tableHeaderRow}>
+                                    <th className={styles.tableHeaderOptions}>Id</th>
                                     <th className={styles.tableHeaderOptions}>Nombre</th>
                                     <th className={styles.tableHeaderOptions}>Correo</th>
                                     <th className={styles.tableHeaderOptions}>Rol usuario</th>
@@ -111,114 +112,11 @@ const DashBoard: NextPage = () => {
                                     <td className={styles.field}>Daniel </td>
                                     <td className={styles.field}>Daniel </td>
                                     <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
                                     <td className={styles.field}>Daniel </td>
                                     <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
                                     <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
                                 </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
-                                <tr className={styles.fields}>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}>Daniel </td>
-                                    <td className={styles.field}><button className={styles.btn}><FontAwesomeIcon icon={faBan} style={{ fontSize: '40px' }} /></button></td>
-                                    <td className={styles.field}><button className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
-                                </tr>
+                               
                             </tbody>
                         </table>
 

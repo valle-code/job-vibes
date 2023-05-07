@@ -44,7 +44,7 @@ const Home: NextPage = () => {
       url: "http://localhost:3001/logout",
     })
       .then(() => {
-        setUser(null); // or any other way you manage user authentication state
+        setUser(null); 
       })
       .catch((err) => {
         console.log(err);

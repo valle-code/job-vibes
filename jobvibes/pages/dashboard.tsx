@@ -7,6 +7,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
 import axios from "axios";
 import User from "./api/Models/User";
 import JobOfferData from './api/Models/JobOffer';
@@ -19,6 +20,7 @@ const DashBoard: NextPage = () => {
     const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
     const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const router = useRouter();
 
     const getUser = () => {
         axios({
@@ -49,7 +51,8 @@ const DashBoard: NextPage = () => {
             url: "http://localhost:3001/logout",
         })
             .then(() => {
-                setUser(null); // or any other way you manage user authentication state
+                setUser(null); 
+                router.push('/');
             })
             .catch((err) => {
                 console.log(err);
@@ -193,7 +196,7 @@ const DashBoard: NextPage = () => {
 
                     <button className={styles.btn}><FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px' }} /></button>
 
-                    <button className={styles.btn}><div className={styles.user}>
+                    <button className={styles.btn} onClick={() => logout()}><div className={styles.user}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="" className={styles.img} />
                     </div>
                     </button>
@@ -204,9 +207,7 @@ const DashBoard: NextPage = () => {
                             <div className={styles.number}>{users.length}</div>
                             <div className={styles.cardname}>Usuarios registrados</div>
                         </div>
-                        <div className="icon-box">
-                            <i className="fas fa-briefcase-medical"></i>
-                        </div>
+                        
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
@@ -228,9 +229,7 @@ const DashBoard: NextPage = () => {
                             <div className={styles.number}>{jobOffers.length}</div>
                             <div className={styles.cardname}>Ofertas de Trabajo</div>
                         </div>
-                        <div className="icon-box">
-                            <i className="fas fa-briefcase-medical"></i>
-                        </div>
+                        
                     </div>
                 </div>
                 <div className={styles.tables}>

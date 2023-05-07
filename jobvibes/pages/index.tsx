@@ -119,7 +119,8 @@ const Home: NextPage = () => {
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
             <Navbar.Link href="joboffers">Ofertas</Navbar.Link>
             <Navbar.Link href="settings">Ajustes</Navbar.Link>
-            <Navbar.Link href="dashboard">Dashboard</Navbar.Link>
+            {user?.adminRole === 1 ? <Navbar.Link href="dashboard">Dashboard</Navbar.Link> : <Navbar.Link href="contact">Contacto</Navbar.Link>}
+
           </Navbar.Content>
           <Navbar.Content>
             {user ? (

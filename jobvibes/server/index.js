@@ -50,6 +50,42 @@ app.post('/register', async (req, res) => {
   })
 });
 
+app.post('/addUser', async (req, res) => {
+  const username = req.body.username;
+  console.log(username);
+  const password = req.body.password;
+  const email = req.body.email;
+  const userRole = req.body.adminRole;
+  console.log(password);
+  
+
+  const insertquery = "INSERT INTO `users` (`email`, `username`, `password`, `adminRole`) VALUES (?, ?, ?, 1)";
+  
+  
+  const selectquery = "SELECT * FROM `users` WHERE username = ?";
+
+  db.query(selectquery, [username], async (err, rows) => {
+    if (err) throw err;
+    if (rows.length > 0) {
+      res.send('El usuario ya existe con nombre ' + username + ' ya existe');
+    } else {
+      const hashedPassword = await bycrypt.hash(password, 10);
+      if (userRole === "Administrador") {
+        db.query(insertquery, [email, username, hashedPassword, 1], (err, rows) => {
+          if (err) throw err;
+          res.send('Usuario registrado con exito');
+        })
+      } else {
+        
+          db.query(insertquery, [email, username, hashedPassword, 0], (err, rows) => {
+            if (err) throw err;
+            res.send('Usuario registrado con exito');
+          })
+      }
+    }
+  })
+});
+
 // Login page endpoint  
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {

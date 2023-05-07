@@ -32,10 +32,11 @@ const DashBoard: NextPage = () => {
                 const userData = res.data;
                 const usuario = new User(userData.id, userData.username, userData.password, userData.email, userData.userRole, userData.adminRole, userData.bannedRole);
                 console.log(usuario.id, usuario.username, usuario.password, usuario.userRole, usuario.adminRole, usuario.bannedRole)
-                if (userData.username !== undefined) {
-                    setUser(usuario);
+                if (userData.username === undefined || userData.adminRole === 0) {
+                    router.push('login');
+                    
                 } else {
-                    setUser(null);
+                    setUser(usuario);
                 }
 
             })
@@ -192,8 +193,6 @@ const DashBoard: NextPage = () => {
                         </label>
                     </div>
 
-
-
                     <button className={styles.btn}><FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px' }} /></button>
 
                     <button className={styles.btn} onClick={() => logout()}><div className={styles.user}>
@@ -236,7 +235,7 @@ const DashBoard: NextPage = () => {
                     <div className={styles.lastappointments}>
                         <div className={styles.heading}>
                             <h2>Usuarios Registrados</h2>
-                            <button className={styles.btn}><img src="https://www.nicepng.com/png/full/251-2519428_0-add-icon-white-png.png" height="40px" alt="Añadir usuario"></img></button>
+                            <a href="addUser" className={styles.btn} ><img src="https://www.nicepng.com/png/full/251-2519428_0-add-icon-white-png.png" height="40px" alt="Añadir usuario"></img></a>
                         </div>
                         <table className={styles.usertable}>
                             <thead className={styles.tableHeader}>

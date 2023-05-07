@@ -17,9 +17,8 @@ const DashBoard: NextPage = () => {
     const [user, setUser] = useState<User | null>(null);
     const [users, setUsers] = useState<User[]>([]);
     const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
-    
-    
-    let userDataList: User[] = [];
+    const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const getUser = () => {
         axios({
@@ -78,23 +77,22 @@ const DashBoard: NextPage = () => {
             });
     };
 
-
-    const getUsuariosBaneados =  () => { return users.filter((user) => user.bannedRole === 1).length;}
+    const getUsuariosBaneados = () => { return users.filter((user) => user.bannedRole === 1).length; }
 
     const getJobOffers = () => {
         axios({
-          method: "get",
-          withCredentials: true,
-          url: "http://localhost:3001/getJobOffer",
+            method: "get",
+            withCredentials: true,
+            url: "http://localhost:3001/getJobOffer",
         })
-        .then((res) => {
-          const jobOffersData = res.data.map((row: any) => new JobOfferData(row.jobDetails, row.creationDate));
-          setJobOffers(jobOffersData);
-        })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+            .then((res) => {
+                const jobOffersData = res.data.map((row: any) => new JobOfferData(row.jobDetails, row.creationDate));
+                setJobOffers(jobOffersData);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
     const handleDelete = (id: number) => {
         axios({
@@ -126,9 +124,36 @@ const DashBoard: NextPage = () => {
             });
     }
 
-    
+    const getSearchedUsers = (searchQuery: string) => {
+        axios({
+            method: "get",
+            withCredentials: true,
+            url: `http://localhost:3001/searchUser/${searchQuery}`,
+        })
+            .then((res) => {
+                const usersData = res.data.map((user: User) => {
+                    return {
+                        id: user.id,
+                        username: user.username,
+                        password: user.password,
+                        email: user.email,
+                        userRole: user.userRole,
+                        adminRole: user.adminRole,
+                        bannedRole: user.bannedRole
+                    };
+                });
+                setSearchedUsers(usersData);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-
+    const handleSearch = () => {
+        if (searchQuery !== "") {
+          getSearchedUsers(searchQuery);
+        }
+      }
 
     useEffect(() => {
         // Llamada a la función getUser al cargar el componente
@@ -137,7 +162,6 @@ const DashBoard: NextPage = () => {
         getJobOffers();
     }, []);
 
-    
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>
@@ -159,9 +183,9 @@ const DashBoard: NextPage = () => {
             <div className={styles.main}>
                 <div className={styles.topbar}>
                     <div className={styles.search}>
-                        <input type="text" name="search" placeholder="Buscar usuarios" />
+                        <input type="text" name="search" placeholder="Buscar usuarios" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
                         <label htmlFor="search">
-                            <button className={styles.btn}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ fontSize: '25px' }} /></button>
+                            <button className={styles.btn} onClick={() => handleSearch()}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ fontSize: '25px' }} /></button>
                         </label>
                     </div>
 
@@ -189,17 +213,15 @@ const DashBoard: NextPage = () => {
                             <div className={styles.number}>1</div>
                             <div className={styles.cardname}>Administrador Conectado</div>
                         </div>
-                        <div className="icon-box">
-                            <i className="fas fa-briefcase-medical"></i>
-                        </div>
+                        
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
                             <div className={styles.number}>{getUsuariosBaneados()}</div>
-                            
+
                             <div className={styles.cardname}>{getUsuariosBaneados() === 1 ? "Usuario Baneado" : "Usuarios Baneados"}</div>
                         </div>
-                       
+
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
@@ -230,18 +252,29 @@ const DashBoard: NextPage = () => {
                                 </tr>
                             </thead>
                             <tbody className={styles.tableBody}>
-                                {users ? (
+                                {searchedUsers.length > 0 ? (
+                                    searchedUsers.map((user) => (
+                                        <tr className={styles.fields}>
+                                            <td className={styles.field}>{user.id}</td>
+                                            <td className={styles.field}>{user.username}</td>
+                                            <td className={styles.field}>{user.email}</td>
+                                            <td className={styles.field}>{user.adminRole === 1 ? "Admin" : "Usuario"}</td>
+                                            <td className={styles.field}><button onClick={() => handleBan(user.id)} className={styles.btn}>{user.bannedRole === 1 ? <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', color: "red" }} /> : <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', }} />}</button></td>
+                                            <td className={styles.field}><button onClick={() => handleDelete(user.id)} className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
+                                        </tr>
+                                    ))
+                                ) : (
                                     users.map((user) => (
                                         <tr className={styles.fields}>
                                             <td className={styles.field}>{user.id}</td>
                                             <td className={styles.field}>{user.username}</td>
                                             <td className={styles.field}>{user.email}</td>
                                             <td className={styles.field}>{user.adminRole === 1 ? "Admin" : "Usuario"}</td>
-                                            <td className={styles.field}><button onClick={() => handleBan(user.id)} className={styles.btn}>{user.bannedRole === 1 ? <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', color: "red"}} /> : <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px',}}/>}</button></td>
+                                            <td className={styles.field}><button onClick={() => handleBan(user.id)} className={styles.btn}>{user.bannedRole === 1 ? <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', color: "red" }} /> : <FontAwesomeIcon icon={faBan} style={{ fontSize: '40px', }} />}</button></td>
                                             <td className={styles.field}><button onClick={() => handleDelete(user.id)} className={styles.btn}><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png" height="40px" alt="Añadir usuario"></img></button></td>
                                         </tr>
                                     ))
-                                ) : null}
+                                )}
 
                             </tbody>
                         </table>

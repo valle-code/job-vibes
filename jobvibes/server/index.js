@@ -225,6 +225,37 @@ app.put('/banUser/:id', (req, res) => {
   });
 });
 
+app.get('/searchUser/:username', (req, res) => {
+  const username = req.params.username;
+  const selectQuery = "SELECT * FROM `users` WHERE username LIKE ?";
+
+  db.query(selectQuery, ['%' + username + '%'], (err, rows) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT * FROM `users`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (rows.length === 0) {
+      res.send([]);
+      return;
+    }
+
+    const userData = rows.map(row => ({
+      id: row.id,
+      email: row.email,
+      username: row.username,
+      password: row.password,
+      userRole: row.userRole,
+      adminRole: row.adminRole,
+      bannedRole: row.bannedRole
+    }));
+
+    res.send(userData);
+  });
+});
+
+
 
 
 

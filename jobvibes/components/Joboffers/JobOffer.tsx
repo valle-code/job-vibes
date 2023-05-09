@@ -1,16 +1,25 @@
 import type {NextPage} from 'next';
 import { Card, Text, Row, Col, Button} from "@nextui-org/react";
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 interface Props {
     title: string;
     label: string;
     imageURL: string;
     candidateCount: string;
+    id: number;
 }
 
 const JobOffer: NextPage<Props> = (props) => {
 
     const { title, label, imageURL, candidateCount } = props;
+    const router = useRouter();
+
+    const handleClick = (id: number) => {
+        router.push(`/jobpost/${id}`);
+    }
+
 
     return (
         <Card>
@@ -35,13 +44,13 @@ const JobOffer: NextPage<Props> = (props) => {
             >
                 <Row>
                     <Col>
-                        <Text color="#d1d1d1" size={18}>
-                            {candidateCount} candidatos
+                        <Text color="#d1d1d1" size={16} css={{fontSize: "14px"}}>
+                            {candidateCount}
                         </Text>
                     </Col>
                     <Col>
                         <Row justify="flex-end">
-                            <Button flat auto rounded color="primary">
+                            <Button flat auto rounded color="primary" onClick={() => handleClick(props.id)}>
                                 <Text
                                     css={{color: "inherit"}}
                                     size={12}

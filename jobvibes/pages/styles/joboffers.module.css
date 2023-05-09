@@ -45,6 +45,20 @@
     background-color: #e6e6e6;
     border-radius: 8px;
     resize: none;
+    border: none;
+    outline: none;
+  }
+
+  .commentForm .texttitle {
+    width: 100%;
+    height: 50px;
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    color: black;
+    background-color: #e6e6e6;
+    border-radius: 8px;
+    resize: none;
   }
   
   .formActions {
@@ -93,4 +107,40 @@
   .btn-attach:hover {
     background-color: #bfbfbf;
   }
+
+  .textinput {
+    background: #e6e6e6;
+    height: 40px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0 15px;
+    margin: 5px 0;
+}
+
+.textinput .input {
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    margin-left: 10px;
+    background-color: #e6e6e6;
+    height: 40px;
+    color: black;
+}
+
+.textinput {
+    color: #686868;
+}
+
+.textarea .textinput::placeholder {
+  color: #9a9a9a;
+}
+
+/* textinput focus */
+.textarea .textinput:focus-within {
+  box-shadow: 0 0 0 2px #ff966d;
+}
+
   

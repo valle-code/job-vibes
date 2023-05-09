@@ -131,9 +131,11 @@ app.post('/logout', (req, res) => {
 
 // Post Job offer endpoint
 app.post('/joboffers', (req, res) => {
+  const jobTitle = req.body.jobTitle;
+  const jobDescription = req.body.jobDescription;
   const jobDetails = req.body.jobDetails;
-  const insertquery = "INSERT INTO `jobpost` (`jobDetails`) VALUES (?)";
-  db.query(insertquery, [jobDetails], (err, rows) => {
+  const insertquery = "INSERT INTO `jobpost` (`title`, `description`, `jobDetails`) VALUES (?, ?, ?)";
+  db.query(insertquery, [jobTitle, jobDescription, jobDetails],(err, rows) => {
     if (err) throw err;
     res.send('Oferta de trabajo publicada con exito');
   })
@@ -155,6 +157,9 @@ app.get('/getJobOffer', (req, res) => {
     }
 
     const jobOfferData = rows.map(row => ({
+      id: row.id,
+      title: row.title,
+      description: row.description,
       jobDetails: row.jobDetails,
       creationDate: row.creationDate
     }));
@@ -162,6 +167,67 @@ app.get('/getJobOffer', (req, res) => {
     res.send(jobOfferData);
   });
 });
+
+app.get('/getJobOffer/:id', (req, res) => {
+  const jobId = req.params.id;
+  const sqlQuery = "SELECT * from `jobpost` WHERE id = ?;";
+  db.query(sqlQuery, [jobId], (err, result) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT * FROM `jobpost`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (result.length === 0) {
+      res.send(null);
+      return;
+    }
+
+    const jobOfferData = result.map(row => ({
+      id: row.id,
+      title: row.title,
+      description: row.description,
+      jobDetails: row.jobDetails,
+      creationDate: row.creationDate
+
+     
+    }));
+
+    console.log(jobOfferData);
+
+    res.send(jobOfferData[0]);
+  });
+});
+
+
+app.get('/getJobComments/:id', (req, res) => {
+  const postId = req.params.id;
+  const sqlQuery = "SELECT users.*, comments.* FROM users INNER JOIN comments ON users.id = comments.id_user WHERE comments.id_post = ?;";
+  db.query(sqlQuery, [postId], (err, result) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT users.*, comments.* FROM users INNER JOIN comments ON users.id = comments.id_user WHERE comments.id_post = ?;', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (result.length === 0) {
+      res.send(null);
+      return;
+    }
+
+    const commentsData = result.map(row => ({
+      user: row.username,
+      role: row.adminRole,
+      comment: row.content,
+      creationDate: row.creationDate
+    }));
+
+    console.log(commentsData);
+
+    res.send(commentsData);
+  });
+});
+
 
 
 

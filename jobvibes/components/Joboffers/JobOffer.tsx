@@ -26,10 +26,11 @@ const JobOffer: NextPage<Props> = (props) => {
             <Card.Header css={{position: "absolute", top: 5}}>
                 <Col>
                     <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
-                        {label} 
+                        {title}
+                         
                     </Text>
                     <Text h4 color="white">
-                        {title}
+                        {label}
                     </Text>
                 </Col>
             </Card.Header>

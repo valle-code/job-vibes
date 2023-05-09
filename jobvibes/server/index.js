@@ -133,9 +133,10 @@ app.post('/logout', (req, res) => {
 app.post('/joboffers', (req, res) => {
   const jobTitle = req.body.jobTitle;
   const jobDescription = req.body.jobDescription;
+  const jobThumbnail = req.body.jobThumbnail;
   const jobDetails = req.body.jobDetails;
-  const insertquery = "INSERT INTO `jobpost` (`title`, `description`, `jobDetails`) VALUES (?, ?, ?)";
-  db.query(insertquery, [jobTitle, jobDescription, jobDetails],(err, rows) => {
+  const insertquery = "INSERT INTO `jobpost` (`title`, `description`, `thumbnail`, `jobDetails`) VALUES (?, ?, ?, ?)";
+  db.query(insertquery, [jobTitle, jobDescription, jobThumbnail, jobDetails],(err, rows) => {
     if (err) throw err;
     res.send('Oferta de trabajo publicada con exito');
   })
@@ -160,6 +161,7 @@ app.get('/getJobOffer', (req, res) => {
       id: row.id,
       title: row.title,
       description: row.description,
+      thumbnail: row.thumbnail,
       jobDetails: row.jobDetails,
       creationDate: row.creationDate
     }));

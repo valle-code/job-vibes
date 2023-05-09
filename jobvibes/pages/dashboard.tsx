@@ -90,7 +90,7 @@ const DashBoard: NextPage = () => {
             url: "http://localhost:3001/getJobOffer",
         })
             .then((res) => {
-                const jobOffersData = res.data.map((row: any) => new JobOfferData(row.id, row.title, row.description, row.jobDetails, row.creationDate));
+                const jobOffersData = res.data.map((row: any) => new JobOfferData(row.id, row.title, row.description, row.thumbnail, row.jobDetails, row.creationDate));
                 setJobOffers(jobOffersData);
             })
             .catch((err) => {

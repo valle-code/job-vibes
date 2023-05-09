@@ -32,7 +32,7 @@ const Home: NextPage = () => {
       .then((res) => {
         console.log(res);
         const jobOfferData = res.data;
-        const jobOffer = new JobOfferData(res.data.id, res.data.title, res.data.description, res.data.jobDetails, res.data.creationDate);
+        const jobOffer = new JobOfferData(res.data.id, res.data.title, res.data.description, res.data.thumbnail, res.data.jobDetails, res.data.creationDate);
         setJobOffer(jobOffer);
       }
       )

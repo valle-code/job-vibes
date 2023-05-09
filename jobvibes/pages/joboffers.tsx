@@ -14,6 +14,7 @@ const Home: NextPage = () => {
 
   const [jobTitle, setJobTitle] = useState<string>('');
   const [jobDescription, setJobDescription] = useState<string>('');
+  const [jobThumbnail, setJobThumbnail] = useState<string>('');
   const [jobDetails, setJobDetails] = useState<string>('');
   const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
   const [user, setUser] = useState<User | null>(null);
@@ -44,7 +45,7 @@ const Home: NextPage = () => {
   let jobOfferDataList: JobOfferData[] = [];
 
   const postJobOffer = () => {
-    if (!user) {
+    if (user?.adminRole === 0) {
       router.push('/login');
     } else {
       axios({
@@ -52,6 +53,7 @@ const Home: NextPage = () => {
         data: {
           jobTitle: jobTitle,
           jobDescription: jobDescription,
+          jobThumbnail: jobThumbnail,
           jobDetails: jobDetails
         },
         withCredentials: true,
@@ -76,7 +78,7 @@ const Home: NextPage = () => {
       url: "http://localhost:3001/getJobOffer",
     })
       .then((res) => {
-        const jobOffersData = res.data.map((row: any) => new JobOfferData(row.id, row.title, row.description, row.jobDetails, row.creationDate));
+        const jobOffersData = res.data.map((row: any) => new JobOfferData(row.id, row.title, row.description, row.thumbnail, row.jobDetails, row.creationDate));
         setJobOffers(jobOffersData);
       })
       .catch((err) => {
@@ -103,8 +105,6 @@ const Home: NextPage = () => {
     getJobOffers();
     console.log(jobOffers.length);
   }, []);
-
-
 
   interface CollapseItem {
     name: string;
@@ -149,8 +149,6 @@ const Home: NextPage = () => {
       link: "register"
     },
   ];
-
-
 
   return (
     <div style={{ "height": "100vh", width: "100%" }}>
@@ -215,7 +213,8 @@ const Home: NextPage = () => {
       {/* Cards */}
 
       <>
-        <div className={styles.postSection}>
+        {user?.adminRole === 1 ? ( 
+          <div className={styles.postSection}>
           <div className={styles.commentBox}>
             <div className={styles.userAvatar}>
               <img className={styles.imgAvatar} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="Avatar del usuario" />
@@ -224,8 +223,12 @@ const Home: NextPage = () => {
               <div className={styles.textinput}>
                 <input className={styles.input} type="text" name="title" placeholder="Escribe el titulo" onChange={e => setJobTitle(e.target.value)}></input>
               </div>
+             
               <div className={styles.textinput}>
                 <input className={styles.input} type="text" name="description" placeholder="Escribe una pequeña descripción" onChange={e => setJobDescription(e.target.value)}></input>
+              </div>
+              <div className={styles.textinput}>
+                <input className={styles.input} type="text" name="thumbnail" placeholder="Escribe la url de una foto para la miniatura" onChange={e => setJobThumbnail(e.target.value)}></input>
               </div>
               <textarea className={styles.textarea} name="detailsBox" placeholder="Escribe tu oferta aquí" onChange={e => setJobDetails(e.target.value)}></textarea>
               <div className={styles.formActions}>
@@ -234,6 +237,9 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
+        ) : null
+      }
+        
       </>
 
 
@@ -245,7 +251,7 @@ const Home: NextPage = () => {
               <JobOffer
                 label={jobOffer.jobDescription}
                 title={jobOffer.jobTitle}
-                imageURL="https://images.pexels.com/photos/3009793/pexels-photo-3009793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                imageURL={jobOffer.jobThumbnail}
                 candidateCount={"Publicado el " + jobOffer.creationDate.toString().substring(1, 10)}
                 id = {jobOffer.id}
               />

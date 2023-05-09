@@ -16,7 +16,9 @@ const Home: NextPage = () => {
   const [jobDescription, setJobDescription] = useState<string>('');
   const [jobThumbnail, setJobThumbnail] = useState<string>('');
   const [jobDetails, setJobDetails] = useState<string>('');
+  const [jobImages, setJobImages] = useState<string>(''); // [
   const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
+
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
@@ -48,12 +50,15 @@ const Home: NextPage = () => {
     if (user?.adminRole === 0) {
       router.push('/login');
     } else {
+      const images = jobImages.split(' ');
+      console.log(images)
       axios({
         method: 'post',
         data: {
           jobTitle: jobTitle,
           jobDescription: jobDescription,
           jobThumbnail: jobThumbnail,
+          jobImages: images,
           jobDetails: jobDetails
         },
         withCredentials: true,
@@ -231,6 +236,9 @@ const Home: NextPage = () => {
                 <input className={styles.input} type="text" name="thumbnail" placeholder="Escribe la url de una foto para la miniatura" onChange={e => setJobThumbnail(e.target.value)}></input>
               </div>
               <textarea className={styles.textarea} name="detailsBox" placeholder="Escribe tu oferta aquí" onChange={e => setJobDetails(e.target.value)}></textarea>
+              <div className={styles.textinput}>
+                <input className={styles.input} type="text" name="images" placeholder="Escribe las url de las fotos que quieras incluir" onChange={e => setJobImages(e.target.value)}></input>
+              </div>
               <div className={styles.formActions}>
                 <button type="button" onClick={() => postJobOffer()} className={`${styles.btn} ${styles.btnPublish}`}>Publicar</button>
               </div>

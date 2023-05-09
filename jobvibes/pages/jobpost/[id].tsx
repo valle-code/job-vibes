@@ -17,6 +17,9 @@ const Home: NextPage = () => {
   const [jobOffer, setJobOffer] = useState<JobOfferData | null>(null);
   const [comments, setComments] = useState<CommentData[] | null>(null);
   const [comment, setComment] = useState<string>("");
+  const [images, setImages] = useState<{ image_id: number, url: string }[]>([]);
+
+
 
   interface CollapseItem {
     name: string;
@@ -31,15 +34,19 @@ const Home: NextPage = () => {
     })
       .then((res) => {
         console.log(res);
-        const jobOfferData = res.data;
+        const imagesData = res.data.images;
+        console.log("Hola" + imagesData);
+        console.log(imagesData[0].url);
+        console.log(imagesData.length);
         const jobOffer = new JobOfferData(res.data.id, res.data.title, res.data.description, res.data.thumbnail, res.data.jobDetails, res.data.creationDate);
         setJobOffer(jobOffer);
-      }
-      )
+        setImages(imagesData);
+      })
       .catch((err) => {
         console.log(err);
       });
   }
+
 
   const getJobComments = (id: string) => {
     axios({
@@ -234,13 +241,13 @@ const Home: NextPage = () => {
       <div style={{ backgroundColor: "white", width: "89%", height: "auto", color: "black", padding: "20px", marginTop: "20px", borderRadius: "20px" }}>
         <h2 style={{ color: "black", textAlign: "left" }}>Multimedia</h2>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div className={styles.imageGallery}>
-            <img className={styles.image} src="https://images.pexels.com/photos/3009793/pexels-photo-3009793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt={styles.image} />
-            <img className={styles.image} src="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt={styles.image} />
-            <img className={styles.image} src="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt={styles.image} />
-            <img className={styles.image} src="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt={styles.image} />
-            <img className={styles.image} src="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt={styles.image} />
+        <div className={styles.imageGallery}>
+            {images ? (images.map(image => (
+              console.log(image),
+              <img key={image.image_id} className={styles.image} src={image.url} alt={styles.image} />
+            ))) : <p>No hay imágenes</p>}
           </div>
+
         </div>
       </div>
       <div className="title" style={{ width: "89%", marginTop: "20px" }}>

@@ -129,18 +129,32 @@ app.post('/logout', (req, res) => {
   });
 });
 
-// Post Job offer endpoint
 app.post('/joboffers', (req, res) => {
   const jobTitle = req.body.jobTitle;
   const jobDescription = req.body.jobDescription;
   const jobThumbnail = req.body.jobThumbnail;
   const jobDetails = req.body.jobDetails;
+  const images = req.body.jobImages;
+  
   const insertquery = "INSERT INTO `jobpost` (`title`, `description`, `thumbnail`, `jobDetails`) VALUES (?, ?, ?, ?)";
   db.query(insertquery, [jobTitle, jobDescription, jobThumbnail, jobDetails],(err, rows) => {
     if (err) throw err;
-    res.send('Oferta de trabajo publicada con exito');
-  })
+    const selectquery = "SELECT id FROM `jobpost` ORDER BY id DESC LIMIT 1";
+    db.query(selectquery, (err, rows) => {
+      if (err) throw err;
+      const id_post = rows[0].id;
+      for (let i = 0; i < images.length; i++) {
+        const insertImageQuery = "INSERT INTO `images` (`url`, `id_post`) VALUES (?, ?)";
+        db.query(insertImageQuery, [images[i], id_post], (err, rows) => {
+          if (err) throw err;
+          console.log(`Imagen ${i+1} insertada con éxito`);
+        });
+      }
+      res.send('Oferta de trabajo publicada con éxito');
+    });
+  });
 });
+
 
 // HTTP GET method endpoints
 app.get('/getJobOffer', (req, res) => {
@@ -172,10 +186,10 @@ app.get('/getJobOffer', (req, res) => {
 
 app.get('/getJobOffer/:id', (req, res) => {
   const jobId = req.params.id;
-  const sqlQuery = "SELECT * from `jobpost` WHERE id = ?;";
+  const sqlQuery = "SELECT jobpost.id, title, description, thumbnail, jobDetails, creationDate, images.id as image_id, url FROM `jobpost` INNER JOIN `images`ON jobpost.id = images.id_post WHERE jobpost.id = ?;";
   db.query(sqlQuery, [jobId], (err, result) => {
     if (err) {
-      console.error('Error en la ejecución de la consulta, SELECT * FROM `jobpost`: ', err);
+      console.error('Error en la ejecución de la consulta, SELECT jobpost.id, title, description, thumbnail, jobDetails, creationDate, images.id as image_id, url FROM `jobpost` INNER JOIN `images`ON jobpost.id = images.id_post WHERE jobpost.id = ?: ', err);
       res.status(500).send('Error executing query');
       return;
     }
@@ -185,21 +199,25 @@ app.get('/getJobOffer/:id', (req, res) => {
       return;
     }
 
-    const jobOfferData = result.map(row => ({
-      id: row.id,
-      title: row.title,
-      description: row.description,
-      jobDetails: row.jobDetails,
-      creationDate: row.creationDate
-
-     
-    }));
+    const jobOfferData = {
+      id: result[0].id,
+      title: result[0].title,
+      description: result[0].description,
+      thumbnail: result[0].thumbnail,
+      jobDetails: result[0].jobDetails,
+      creationDate: result[0].creationDate,
+      images: result.map(row => ({
+        image_id: row.image_id,
+        url: row.url
+      }))
+    };
 
     console.log(jobOfferData);
 
-    res.send(jobOfferData[0]);
+    res.send(jobOfferData);
   });
 });
+
 
 app.post('/postComment', (req, res) => {
   const postId = req.body.postId;

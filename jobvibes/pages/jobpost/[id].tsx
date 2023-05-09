@@ -16,6 +16,7 @@ const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [jobOffer, setJobOffer] = useState<JobOfferData | null>(null);
   const [comments, setComments] = useState<CommentData[] | null>(null);
+  const [comment, setComment] = useState<string>("");
 
   interface CollapseItem {
     name: string;
@@ -77,6 +78,26 @@ const Home: NextPage = () => {
         console.log(err);
       });
   };
+
+  const postComment = () => {
+    axios({
+      method: "post",
+      withCredentials: true,
+      url: "http://localhost:3001/postComment",
+      data: {
+        content: comment,
+        postId: jobOffer?.id,
+        userId: user?.id,
+      },
+    })
+      .then(() => {
+        console.log("Comentario enviado");
+        getJobComments(id as string);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const logout = () => {
     axios({
@@ -232,9 +253,9 @@ const Home: NextPage = () => {
               <img className={styles.imgAvatar} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="Avatar del usuario" />
             </div>
             <div className={styles.commentForm}>
-              <textarea className={styles.textarea} placeholder="Escribe tu comentario aquí"></textarea>
+              <textarea className={styles.textarea} placeholder="Escribe tu comentario aquí" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
               <div className={styles.formActions}>
-                <button className={`${styles.btn} ${styles.btnPublish}`}>Publicar</button>
+                <button className={`${styles.btn} ${styles.btnPublish}`} onClick={() => postComment()}>Publicar</button>
               </div>
             </div>
           </div>

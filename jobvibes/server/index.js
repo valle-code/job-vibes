@@ -199,6 +199,17 @@ app.get('/getJobOffer/:id', (req, res) => {
   });
 });
 
+app.post('/postComment', (req, res) => {
+  const postId = req.body.postId;
+  const userId = req.body.userId;
+  const comment = req.body.content;
+  const insertquery = "INSERT INTO `comments` (`content`, `id_user`, `id_post`) VALUES (?, ?, ?)";
+  db.query(insertquery, [comment, userId, postId],(err, rows) => {
+    if (err) throw err;
+    res.send('Comentario publicado con exito');
+  })
+});
+
 
 app.get('/getJobComments/:id', (req, res) => {
   const postId = req.params.id;

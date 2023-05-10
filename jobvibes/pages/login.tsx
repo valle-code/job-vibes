@@ -33,7 +33,8 @@ const Login: NextPage = () => {
             console.log(res);
             router.push('/');
         }).catch(err => {
-            console.log(err);
+            alert('Error al iniciar sesión, compruebe sus credenciales');
+            return;
         });
     }
 

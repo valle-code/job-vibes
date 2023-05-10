@@ -28,10 +28,8 @@ require('./passportConfig')(passport);
 
 app.post('/register', async (req, res) => {
   const username = req.body.username;
-  console.log(username);
   const password = req.body.password;
   const email = req.body.email;
-  console.log(password);
   const insertquery = "INSERT INTO `users` (`email`, `username`, `password`) VALUES (?, ?, ?)";
   const selectquery = "SELECT * FROM `users` WHERE username = ?";
 
@@ -257,9 +255,6 @@ app.get('/getJobComments/:id', (req, res) => {
     res.send(commentsData);
   });
 });
-
-
-
 
 app.get('/getUser', (req, res) => {
   if (req.user) {

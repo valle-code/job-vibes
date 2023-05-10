@@ -47,8 +47,13 @@ const register = (email: string, username: string, password: string) => {
     withCredentials: true,
     url: 'http://localhost:3001/register'
   }).then(res => {
-    alert('El registro se completó con éxito');
-    router.push('login');
+    if (res.data.includes('El usuario ya existe con nombre')) {
+      alert(res.data);
+      return;
+    } else {
+      alert('El registro se completó con éxito');
+      router.push('login');
+    }
   }).catch(err => {
     alert('Error al registrar');
   });

@@ -26,7 +26,6 @@ app.use(passport.session());
 require('./passportConfig')(passport);
 
 
-// Register page endpoint
 app.post('/register', async (req, res) => {
   const username = req.body.username;
   console.log(username);

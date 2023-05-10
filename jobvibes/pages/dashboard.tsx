@@ -156,7 +156,7 @@ const DashBoard: NextPage = () => {
     const handleSearch = () => {
         if (searchQuery !== "") {
           getSearchedUsers(searchQuery);
-        }
+        } 
       }
 
     useEffect(() => {

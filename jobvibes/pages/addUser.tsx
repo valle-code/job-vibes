@@ -17,6 +17,24 @@ const Register: NextPage = () => {
 
 
     const register = (email: string, username: string, password: string, rol: string) => {
+
+        if (!email.trim() || !username.trim() || !password.trim() || !rol.trim()) {
+            alert('Todos los campos son requeridos');
+            return;
+        }
+
+        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        if (!emailRegex.test(email)) {
+            alert('El correo electrónico no es válido');
+            return;
+        }
+
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert('La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y un número');
+            return;
+        }
+
         axios({
           method: 'post',
           data: {

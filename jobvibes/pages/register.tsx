@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { Link, Button } from '@nextui-org/react';
 import styles from './styles/register.module.css';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import {signIn} from 'next-auth/react';
 
 const Register: NextPage = () => {
@@ -11,19 +12,48 @@ const Register: NextPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const router = useRouter();
 
-    const register = (email: string, username: string, password: string) => {
-        axios({
-          method: 'post',
-          data: {
-            email: email,
-            username: username,
-            password: password
-          },
-          withCredentials: true,
-          url: 'http://localhost:3001/register'
-        }).then(res => {console.log(res)}).catch(err => {console.log(err)});
-      }
+const register = (email: string, username: string, password: string) => {
+
+  if (!email.trim() || !username.trim() || !password.trim() || !confirmPassword.trim()) {
+    alert('Todos los campos son requeridos');
+    return;
+  }
+
+  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  if (!emailRegex.test(email)) {
+    alert('El correo electrónico no es válido');
+    return;
+  }
+
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    alert('La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y un número');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert('La contraseña y su confirmación no coinciden');
+    return;
+  }
+  axios({
+    method: 'post',
+    data: {
+      email: email,
+      username: username,
+      password: password
+    },
+    withCredentials: true,
+    url: 'http://localhost:3001/register'
+  }).then(res => {
+    alert('El registro se completó con éxito');
+    router.push('login');
+  }).catch(err => {
+    alert('Error al registrar');
+  });
+}
+
 
     return (
         <div className={styles.wrapper}>

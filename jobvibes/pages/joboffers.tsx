@@ -47,6 +47,12 @@ const Home: NextPage = () => {
   let jobOfferDataList: JobOfferData[] = [];
 
   const postJobOffer = () => {
+
+    if(jobTitle === '' || jobDescription === '' || jobThumbnail === '' || jobDetails === '' || jobImages === '') {
+      alert('Todos los campos son requeridos');
+      return;
+    }
+
     if (user?.adminRole === 0) {
       router.push('/login');
     } else {

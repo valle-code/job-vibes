@@ -17,6 +17,10 @@ const Login: NextPage = () => {
     const [loginPassword, setLoginPassword] = useState<string>('');
 
     const login = (loginUsername: string, loginPassword: string) => {
+        if (!loginUsername.trim() || !loginPassword.trim()) {
+            alert('Todos los campos son requeridos');
+            return;
+        }
         axios({
             method: 'post',
             data: {

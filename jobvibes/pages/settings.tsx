@@ -34,12 +34,16 @@ const Home: NextPage = () => {
       .then((res) => {
         const userData = res.data;
         const usuario = new User(userData.id, userData.username, userData.password, userData.email, userData.userRole, userData.adminRole, userData.bannedRole);
-        console.log(usuario.username, usuario.password)
+        console.log(usuario.id, usuario.username, usuario.password, usuario.userRole, usuario.adminRole, usuario.bannedRole)
         if (userData.username !== undefined) {
-          setUser(usuario);
+          if(userData.bannedRole === 1) {
+            router.push("/ban");
+          } else {
+            setUser(usuario);
+          }
         } else {
           setUser(null);
-          router.push('/login');
+          router.push("login");
         }
        
       })
@@ -47,7 +51,6 @@ const Home: NextPage = () => {
         console.log(err);
       });
   };
-
   useEffect(() => {
     getUser();
 

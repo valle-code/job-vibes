@@ -83,7 +83,6 @@ app.post('/addUser', async (req, res) => {
   })
 });
 
-// Login page endpoint  
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -100,6 +99,11 @@ app.post('/login', (req, res, next) => {
       if (err) {
         console.log(err);
         return next(err);
+      }
+
+      if (req.user.bannedRole == 1) {
+        res.status(403).send("Este usuario está baneado");
+        return;
       }
 
       // Almacenar el usuario completo en la sesión, incluyendo la contraseña
@@ -152,8 +156,6 @@ app.post('/joboffers', (req, res) => {
   });
 });
 
-
-// HTTP GET method endpoints
 app.get('/getJobOffer', (req, res) => {
   const selectquery = "SELECT * FROM `jobpost` ORDER BY `creationDate` DESC;";
   db.query(selectquery, (err, rows) => {
@@ -215,7 +217,6 @@ app.get('/getJobOffer/:id', (req, res) => {
   });
 });
 
-
 app.post('/postComment', (req, res) => {
   const postId = req.body.postId;
   const userId = req.body.userId;
@@ -226,7 +227,6 @@ app.post('/postComment', (req, res) => {
     res.send('Comentario publicado con exito');
   })
 });
-
 
 app.get('/getJobComments/:id', (req, res) => {
   const postId = req.params.id;
@@ -422,14 +422,6 @@ app.post('/recoverPsw', async (req, res) => {
     });
   });
 });
-
-
-
-
-
-
-
-
 
 
 

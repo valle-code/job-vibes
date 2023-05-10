@@ -33,7 +33,11 @@ const Login: NextPage = () => {
             console.log(res);
             router.push('/');
         }).catch(err => {
-            alert('Error al iniciar sesión, compruebe sus credenciales');
+            if (err.response && err.response.status === 403) {
+                router.push('/ban');
+            } else {
+                alert('Error al iniciar sesión, compruebe sus credenciales');
+            }
             return;
         });
     }

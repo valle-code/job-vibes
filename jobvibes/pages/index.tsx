@@ -74,9 +74,6 @@ const Home: NextPage = () => {
         console.log(err);
       });
   }
-  
-  
-
 
   useEffect(() => {
     // Llamada a la función getUser al cargar el componente

@@ -382,6 +382,47 @@ app.get('/searchUser/:username', (req, res) => {
   });
 });
 
+app.post('/recoverPsw', async (req, res) => {
+  const username = req.body.username;
+  const email = req.body.email;
+  const newPasword = req.body.password;
+  const hashedPassword = await bycrypt.hash(newPasword, 10);
+  const selectQuery = "SELECT * FROM `users` WHERE username = ? AND email = ?";
+  
+  db.query(selectQuery, [username, email], (err, rows) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT * FROM `users`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (rows.length === 0) {
+      res.status(404).send('El usuario con nombre de usuario ' + username + ' y email ' + email + ' no existe');
+      return;
+    }
+
+    const user = rows[0];
+    
+    const updateQuery = "UPDATE `users` SET password = ? WHERE id = ?";
+
+    
+    db.query(updateQuery, [hashedPassword, user.id], (err, result) => {
+      if (err) {
+        console.error('Error en la ejecución de la consulta, UPDATE `users` SET password: ', err);
+        res.status(500).send('Error executing query');
+        return;
+      }
+
+      if (result.affectedRows === 0) {
+        res.send('El usuario con nombre de usuario ' + username + ' y email ' + email + ' no existe');
+        return;
+      }
+
+      res.status(200).send('Contraseña cambiada con exito' );
+    });
+  });
+});
+
 
 
 

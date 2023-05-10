@@ -6,6 +6,9 @@ import Footer from "../components/Index/Footer";
 import styles from "./styles/jumbotron.module.css";
 import axios from "axios";
 import User from "./api/Models/User";
+import JobOfferData from './api/Models/JobOffer';
+import JobOffer from '../components/Joboffers/JobOffer'; 
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   interface CollapseItem {
@@ -14,6 +17,8 @@ const Home: NextPage = () => {
   }
 
   const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
 
   const getUser = () => {
     axios({
@@ -51,12 +56,32 @@ const Home: NextPage = () => {
       });
   };
 
+  const joinFree = () => {
+    router.push("register");
+  };
+
+  const getJobOffers = () => {
+    axios({
+      method: "get",
+      withCredentials: true,
+      url: "http://localhost:3001/getJobOffer",
+    })
+      .then((res) => {
+        const jobOffersData = res.data.slice(0, 3).map((row: any) => new JobOfferData(row.id, row.title, row.description, row.thumbnail, row.jobDetails, row.creationDate));
+        setJobOffers(jobOffersData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  
   
 
 
   useEffect(() => {
     // Llamada a la función getUser al cargar el componente
     getUser();
+    getJobOffers();
   }, []);
 
   const collapseItems: CollapseItem[] = [
@@ -194,6 +219,7 @@ const Home: NextPage = () => {
               Tu trabajo cuenta
             </Text>
             <Button
+              onClick={() => joinFree()}
               className={styles.join}
               size="md"
               shadow
@@ -211,30 +237,19 @@ const Home: NextPage = () => {
       </Grid.Container>
       {/* Cards */}
       <Grid.Container gap={2}>
-        <Grid xs={12} sm={4}>
-          <OptionCard
-            label="Nueva oferta de trabajo"
-            title="Lorem ipsum dolor sit amet, consectetur"
-            imageURL="https://images.pexels.com/photos/3009793/pexels-photo-3009793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            candidateCount="3,500"
-          />
-        </Grid>
-        <Grid xs={12} sm={4}>
-          <OptionCard
-            label="Nueva oferta de trabajo"
-            title="Lorem ipsum dolor sit amet, consectetur"
-            imageURL="https://images.pexels.com/photos/7654179/pexels-photo-7654179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            candidateCount="1,000"
-          />
-        </Grid>
-        <Grid xs={12} sm={4}>
-          <OptionCard
-            label="Nueva oferta de trabajo"
-            title="Lorem ipsum dolor sit amet, consectetur"
-            imageURL="https://images.pexels.com/photos/5711267/pexels-photo-5711267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            candidateCount="5,000"
-          />
-        </Grid>
+      {jobOffers ? (
+          jobOffers.map((jobOffer) => (
+            <Grid xs={12} sm={4}>
+              <JobOffer
+                label={jobOffer.jobDescription}
+                title={jobOffer.jobTitle}
+                imageURL={jobOffer.jobThumbnail}
+                candidateCount={"Publicado el " + jobOffer.creationDate.toString().substring(1, 10)}
+                id = {jobOffer.id}
+              />
+            </Grid>
+          ))
+        ) : null}
       </Grid.Container>
       {/* Footer */}
 

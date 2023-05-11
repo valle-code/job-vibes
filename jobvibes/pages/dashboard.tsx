@@ -34,9 +34,12 @@ const DashBoard: NextPage = () => {
                 console.log(usuario.id, usuario.username, usuario.password, usuario.userRole, usuario.adminRole, usuario.bannedRole)
                 if (userData.username === undefined || userData.adminRole === 0) {
                     router.push('login');
-                    
                 } else {
-                    setUser(usuario);
+                    if (userData.bannedRole === 1) {
+                        router.push("/ban");
+                    } else {
+                        setUser(usuario);
+                    }
                 }
 
             })
@@ -52,7 +55,7 @@ const DashBoard: NextPage = () => {
             url: "http://localhost:3001/logout",
         })
             .then(() => {
-                setUser(null); 
+                setUser(null);
                 router.push('/');
             })
             .catch((err) => {
@@ -155,9 +158,9 @@ const DashBoard: NextPage = () => {
 
     const handleSearch = () => {
         if (searchQuery !== "") {
-          getSearchedUsers(searchQuery);
-        } 
-      }
+            getSearchedUsers(searchQuery);
+        }
+    }
 
     useEffect(() => {
         // Llamada a la función getUser al cargar el componente
@@ -187,13 +190,13 @@ const DashBoard: NextPage = () => {
             <div className={styles.main}>
                 <div className={styles.topbar}>
                     <div className={styles.search}>
-                        <input type="text" name="search" placeholder="Buscar usuarios" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+                        <input type="text" name="search" placeholder="Buscar usuarios" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                         <label htmlFor="search">
                             <button className={styles.btn} onClick={() => handleSearch()}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ fontSize: '25px' }} /></button>
                         </label>
                     </div>
 
-                    <button className={styles.btn}><FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px' }} /></button>
+                    <button className={styles.btn}>{getUsuariosBaneados() > 0 ? <FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px', color: 'red' }}/> : <FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px', color: 'black' }}/>}</button>
 
                     <button className={styles.btn} onClick={() => logout()}><div className={styles.user}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="" className={styles.img} />
@@ -206,14 +209,14 @@ const DashBoard: NextPage = () => {
                             <div className={styles.number}>{users.length}</div>
                             <div className={styles.cardname}>Usuarios registrados</div>
                         </div>
-                        
+
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
                             <div className={styles.number}>1</div>
                             <div className={styles.cardname}>Administrador Conectado</div>
                         </div>
-                        
+
                     </div>
                     <div className={styles.card}>
                         <div className="card-content">
@@ -228,7 +231,7 @@ const DashBoard: NextPage = () => {
                             <div className={styles.number}>{jobOffers.length}</div>
                             <div className={styles.cardname}>Ofertas de Trabajo</div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div className={styles.tables}>

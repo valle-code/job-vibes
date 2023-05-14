@@ -56,9 +56,8 @@ app.post('/addUser', async (req, res) => {
   console.log(password);
   
 
-  const insertquery = "INSERT INTO `users` (`email`, `username`, `password`, `adminRole`) VALUES (?, ?, ?, 1)";
-  
-  
+  const insertquery = "INSERT INTO `users` (`email`, `username`, `password`, `adminRole`) VALUES (?, ?, ?, ?)";
+
   const selectquery = "SELECT * FROM `users` WHERE username = ?";
 
   db.query(selectquery, [username], async (err, rows) => {

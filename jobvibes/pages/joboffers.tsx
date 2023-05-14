@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
-import { Navbar, Text, Button, Grid, Link } from '@nextui-org/react';
+import { Navbar, Text, Button, Grid, Link, Modal, useModal } from '@nextui-org/react';
 import JobOffer from '../components/Joboffers/JobOffer';
 import Footer from '../components/Index/Footer';
 import styles from './styles/joboffers.module.css';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import JobOfferData from './api/Models/JobOffer';
 import User from "./api/Models/User";
 import { useRouter } from 'next/router';
+import PopUp from '../components/Global/PopUp';
+
 
 
 const Home: NextPage = () => {
@@ -16,10 +18,11 @@ const Home: NextPage = () => {
   const [jobDescription, setJobDescription] = useState<string>('');
   const [jobThumbnail, setJobThumbnail] = useState<string>('');
   const [jobDetails, setJobDetails] = useState<string>('');
-  const [jobImages, setJobImages] = useState<string>(''); // [
+  const [jobImages, setJobImages] = useState<string>(''); 
   const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
 
   const [user, setUser] = useState<User | null>(null);
+  const { setVisible, bindings } = useModal();
   const router = useRouter();
 
   const getUser = () => {
@@ -49,7 +52,7 @@ const Home: NextPage = () => {
   const postJobOffer = () => {
 
     if(jobTitle === '' || jobDescription === '' || jobThumbnail === '' || jobDetails === '' || jobImages === '') {
-      alert('Todos los campos son requeridos');
+      setVisible(true);
       return;
     }
 
@@ -111,6 +114,11 @@ const Home: NextPage = () => {
       });
   };
 
+  const handlePopupClose = () => {
+    setVisible(false);
+};
+
+
   useEffect(() => {
     getUser();
     getJobOffers();
@@ -165,7 +173,7 @@ const Home: NextPage = () => {
     <div style={{ "height": "100vh", width: "100%" }}>
       {/* Navbar */}
       <div style={{ width: "100%", backgroundColor: "white" }}>
-        <Navbar variant="sticky">
+      <Navbar variant="sticky">
           <Navbar.Brand>
             <Navbar.Toggle aria-label="toggle navigation" />
             <Text b color="inherit" hideIn="xs" css={{ marginLeft: "30px" }}>
@@ -178,7 +186,8 @@ const Home: NextPage = () => {
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
             <Navbar.Link href="joboffers">Ofertas</Navbar.Link>
             <Navbar.Link href="settings">Ajustes</Navbar.Link>
-            <Navbar.Link href="#">Contacto</Navbar.Link>
+            {user?.adminRole === 1 ? <Navbar.Link href="dashboard">Dashboard</Navbar.Link> : <Navbar.Link href="contact">Contacto</Navbar.Link>}
+
           </Navbar.Content>
           <Navbar.Content>
             {user ? (
@@ -283,7 +292,19 @@ const Home: NextPage = () => {
       <div style={{ width: "100%", backgroundColor: "white", marginRight: "30px" }}>
         <Footer />
       </div>
-
+          <Modal
+                scroll
+                width="450px"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                {...bindings}
+            >
+                <PopUp
+                    title="Error"
+                    description="Por favor, rellene todos los campos"
+                    onClose={handlePopupClose}
+                />
+            </Modal>
     </div>
 
   )

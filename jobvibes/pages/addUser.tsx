@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
-import { Link, Button } from '@nextui-org/react';
+import { Link, Button, Modal, useModal }  from '@nextui-org/react';
 import styles from './styles/register.module.css';
 import axios from 'axios';
 import {signIn} from 'next-auth/react';
 import { useRouter } from 'next/router';
+import PopUp from '../components/Global/PopUp';
+
 
 
 const Register: NextPage = () => {
@@ -13,25 +15,33 @@ const Register: NextPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [selectedRole, setSelectedRole] = useState('Usuario');
+    const [error, setError] = useState<string>('');
+    const { setVisible, bindings } = useModal();
     const router = useRouter();
 
+    const handlePopupClose = () => {
+        setVisible(false);
+    };
 
     const register = (email: string, username: string, password: string, rol: string) => {
 
         if (!email.trim() || !username.trim() || !password.trim() || !rol.trim()) {
-            alert('Todos los campos son requeridos');
+            setError('Todos los campos son obligatorios');
+            setVisible(true);
             return;
         }
 
         const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (!emailRegex.test(email)) {
-            alert('El correo electrónico no es válido');
+            setError('El email no es válido');
+            setVisible(true);
             return;
         }
 
         const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
         if (!passwordRegex.test(password)) {
-            alert('La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y un número');
+            setError('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número');
+            setVisible(true);
             return;
         }
 
@@ -48,7 +58,12 @@ const Register: NextPage = () => {
         }).then(res => {console.log(res)
             router.push('/dashboard');
         }
-        ).catch(err => {console.log(err)});
+        ).catch(err => {
+            console.log(err)
+            setError('Error: ' + err.message)
+            setVisible(true);
+            return;
+        });
       }
 
       const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -86,6 +101,19 @@ const Register: NextPage = () => {
                     </button>
                 </div>
             </div>
+            <Modal
+                scroll
+                width="450px"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                {...bindings}
+            >
+                <PopUp
+                    title="Error"
+                    description={error}
+                    onClose={handlePopupClose}
+                />
+            </Modal>
         </div>
     )
 }

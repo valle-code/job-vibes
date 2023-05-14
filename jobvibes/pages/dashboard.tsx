@@ -11,6 +11,9 @@ import { useRouter } from 'next/router';
 import axios from "axios";
 import User from "./api/Models/User";
 import JobOfferData from './api/Models/JobOffer';
+import { Modal, useModal } from '@nextui-org/react';
+import PopUp from '../components/Global/PopUp';
+
 
 
 
@@ -20,6 +23,7 @@ const DashBoard: NextPage = () => {
     const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
     const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const { setVisible, bindings } = useModal();
     const router = useRouter();
 
     const getUser = () => {
@@ -156,9 +160,15 @@ const DashBoard: NextPage = () => {
             });
     };
 
+    const handlePopupClose = () => {
+        setVisible(false);
+    };
+
     const handleSearch = () => {
         if (searchQuery !== "") {
             getSearchedUsers(searchQuery);
+        } else {
+            setVisible(true);
         }
     }
 
@@ -283,6 +293,19 @@ const DashBoard: NextPage = () => {
                     </div>
                 </div>
             </div>
+            <Modal
+                scroll
+                width="450px"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                {...bindings}
+            >
+                <PopUp
+                    title="Error"
+                    description="Rellena todos los campos"
+                    onClose={handlePopupClose}
+                />
+            </Modal>
         </div>
     );
 }

@@ -1,24 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import { Button, Link } from '@nextui-org/react';
 import styles from './styles/login.module.css';
 import axios from 'axios';
-import { signIn, useSession} from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { Modal, useModal, Button, Link, Text } from "@nextui-org/react";
+import PopUp from '../components/Global/PopUp';
 
 const Login: NextPage = () => {
-    const { data: session } = useSession();
-    useEffect(() => {
-        console.log(session);
-      }, [session]);
+
+
     const router = useRouter();
 
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
+    const [showPopup, setShowPopup] = useState(false);
+    const { setVisible, bindings } = useModal();
+
+    useEffect(() => {
+        console.log(`El valor de showPopup es ${showPopup}`);
+    }, [showPopup]);
+
+
 
     const login = (loginUsername: string, loginPassword: string) => {
         if (!loginUsername.trim() || !loginPassword.trim()) {
-            alert('Todos los campos son requeridos');
+            setVisible(true);
             return;
         }
         axios({
@@ -41,6 +48,10 @@ const Login: NextPage = () => {
             return;
         });
     }
+
+    const handlePopupClose = () => {
+        setVisible(false);
+    };
 
     return (
         <div className={styles.wrapper}>
@@ -77,6 +88,19 @@ const Login: NextPage = () => {
                     </div>
                 </div>
             </div>
+            <Modal
+                scroll
+                width="450px"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                {...bindings}
+            >
+                <PopUp
+                    title="Error"
+                    description="Por favor, rellene todos los campos"
+                    onClose={handlePopupClose}
+                />
+            </Modal>
         </div>
     )
 }

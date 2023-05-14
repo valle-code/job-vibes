@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
-import { Link, Button } from '@nextui-org/react';
+import { Link, Button, Modal, useModal } from '@nextui-org/react';
 import styles from './styles/register.module.css';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import {signIn} from 'next-auth/react';
+import PopUp from '../components/Global/PopUp';
 
 const Register: NextPage = () => {
 
@@ -12,29 +13,43 @@ const Register: NextPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
+    const { setVisible, bindings } = useModal();
+    
     const router = useRouter();
+
+  const handlePopupClose = () => {
+      setVisible(false);
+  };
 
 const register = (email: string, username: string, password: string) => {
 
   if (!email.trim() || !username.trim() || !password.trim() || !confirmPassword.trim()) {
-    alert('Todos los campos son requeridos');
+    setError('Todos los campos son obligatorios');
+    setVisible(true);
     return;
   }
 
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   if (!emailRegex.test(email)) {
-    alert('El correo electrónico no es válido');
+    setError('El email no es válido');
+    setVisible(true);
+
     return;
   }
 
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
   if (!passwordRegex.test(password)) {
-    alert('La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y un número');
+    setError('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número');
+    setVisible(true);
+
     return;
   }
 
   if (password !== confirmPassword) {
-    alert('La contraseña y su confirmación no coinciden');
+    setError('Las contraseñas no coinciden');
+    setVisible(true);
+
     return;
   }
   axios({
@@ -48,14 +63,18 @@ const register = (email: string, username: string, password: string) => {
     url: 'http://localhost:3001/register'
   }).then(res => {
     if (res.data.includes('El usuario ya existe con nombre')) {
-      alert(res.data);
+      setError(res.data);
+      setVisible(true);
+
       return;
     } else {
-      alert('El registro se completó con éxito');
       router.push('login');
     }
   }).catch(err => {
-    alert('Error al registrar');
+    setError('Error al registrar el usuario');
+    setVisible(true);
+
+    return;
   });
 }
 
@@ -78,7 +97,7 @@ const register = (email: string, username: string, password: string) => {
                         <input className={styles.input} type="text" name="username" placeholder="Nombre de usuario" onChange={e => setUsername(e.target.value)} />
                     </div>
                     <div className={styles.textinput}>
-                        <input className={styles.input} type="text" name="password" placeholder="Contraseña" onChange={e => setPassword(e.target.value)} />
+                        <input className={styles.input} type="password" name="password" placeholder="Contraseña" onChange={e => setPassword(e.target.value)} />
                     </div>
                     <div className={styles.textinput}>
                         <input className={styles.input} type="password" name="confirmPassword" placeholder="Confirma tu contraseña" onChange={e => setConfirmPassword(e.target.value)} />
@@ -105,6 +124,19 @@ const register = (email: string, username: string, password: string) => {
                     </div>
                 </div>
             </div>
+            <Modal
+                scroll
+                width="450px"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                {...bindings}
+            >
+                <PopUp
+                    title="Error"
+                    description={error}
+                    onClose={handlePopupClose}
+                />
+            </Modal>
         </div>
     )
 }

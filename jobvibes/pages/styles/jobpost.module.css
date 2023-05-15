@@ -97,6 +97,43 @@
   transition: all 0.3s ease;
 }
 
+.title {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* Primera columna auto, segunda columna ocupa el espacio restante, tercera columna auto */
+  width: 88%;
+  margin-top: 20px;
+  align-items: center; /* Centra verticalmente los elementos en cada fila */
+}
+
+.title h1 {
+  color: white;
+  text-align: center;
+  font-size: 45px;
+  grid-column: 2; /* Ocupa la segunda columna del grid */
+}
+
+.title button {
+  justify-self: end; /* Alinea el botón a la derecha de su columna */
+  grid-column: 3; /* Ubica el botón en la tercera columna del grid */
+}
+
+.flag {
+  width: 100%; /* Ajusta el tamaño del botón al 100% del contenedor */
+  background: none;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.flag:hover {
+  transform: scale(1.2);
+}
+
+
+.flag:active {
+  transform: scale(0.95);
+}
+
+
 .btn-publish {
   width: 68%;
   padding: 10px;

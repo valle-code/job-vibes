@@ -422,6 +422,23 @@ app.post('/recoverPsw', async (req, res) => {
   });
 });
 
+app.post('/sendReport', (req, res) => {
+  const idPost = req.body.idPost;
+  const title = req.body.title;
+  const description = req.body.description;
+  const insertQuery = "INSERT INTO `reports` (idPost, titleReport, descriptionReport) VALUES (?, ?, ?)";
+
+  db.query(insertQuery, [idPost, title, description], (err, result) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, INSERT INTO `reports`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    res.status(200).send('Reporte enviado con exito' );
+  });
+});
+
 
 
 // start server 

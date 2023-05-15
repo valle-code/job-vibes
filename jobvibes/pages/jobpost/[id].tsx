@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Navbar, Text, Button, Grid, Col, Link } from '@nextui-org/react';
+import { Navbar, Text, Button, Grid, Col, Link, Modal, useModal, Input, useInput, Textarea } from '@nextui-org/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFlag } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/jobpost.module.css';
 import Comment from '../../components/Posts/Comment';
 import User from "../api/Models/User";
 import JobOfferData from '../api/Models/JobOffer';
 import CommentData from '../api/Models/Comment';
 import axios from 'axios';
+import React from "react";
 
 const Home: NextPage = () => {
 
@@ -18,12 +21,32 @@ const Home: NextPage = () => {
   const [comments, setComments] = useState<CommentData[] | null>(null);
   const [comment, setComment] = useState<string>("");
   const [images, setImages] = useState<{ image_id: number, url: string }[]>([]);
-
-
+  const [visible, setVisible] = React.useState(false);
+  const { value, reset, bindings } = useInput("");
+  const [textArea, setTextarea] = useState<string>("");
 
   interface CollapseItem {
     name: string;
     link: string;
+  }
+
+  const sendReport = () => {
+    axios({
+      method: "post",
+      withCredentials: true,
+      url: `http://localhost:3001/sendReport`,
+      data: {
+        idPost: jobOffer?.id,
+        title: value,
+        description: textArea,
+      },
+    }).then((res) => {
+      setVisible(false);
+    }
+    ).catch((err) => {
+      console.log(err);
+    }
+    )
   }
 
   const getAllPostData = (id: string) => {
@@ -129,7 +152,6 @@ const Home: NextPage = () => {
     }
   }, [id]);
 
-
   const collapseItems: CollapseItem[] = [
     {
       name: "Estadísticas",
@@ -168,6 +190,13 @@ const Home: NextPage = () => {
       link: "register"
     },
   ];
+
+  const handler = () => setVisible(true);
+
+  const closeHandler = () => {
+    setVisible(false);
+    console.log("closed");
+  };
 
   return (
     <div style={{ "height": "100vh", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -231,8 +260,9 @@ const Home: NextPage = () => {
         </Navbar>
       </div>
       {/* Job Post */}
-      <div className="title" style={{ width: "100%", marginTop: "20px" }}>
+      <div className={styles.title} >
         <h1 style={{ color: "white", textAlign: "center", fontSize: "45px" }}>{jobOffer?.jobTitle}</h1>
+        <button className={styles.flag} onClick={() => handler()}><FontAwesomeIcon icon={faFlag} style={{ fontSize: '35px' }} /></button>
       </div>
 
       <div style={{ backgroundColor: "white", width: "89%", height: "auto", color: "black", padding: "20px", marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "20px" }}>
@@ -282,7 +312,39 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
-
+      <Modal
+        closeButton
+        preventClose
+        aria-labelledby="modal-title"
+        open={visible}
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18} b>
+            ¿Qué ocurre?
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Input
+           {...bindings}
+            clearable
+            bordered = {false}
+            fullWidth
+            color="primary"
+            size="lg"
+            placeholder="Título"
+          />
+          <Textarea
+           onChange={(e) => setTextarea(e.target.value)}
+          placeholder="Detalla que ocurre con este post"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto onPress={() => sendReport()}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

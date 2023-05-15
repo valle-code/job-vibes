@@ -40,7 +40,7 @@ const Home: NextPage = () => {
       });
   };
 
-  const getJobOffers = () => {
+  const getReports = () => {
     axios({
       method: "get",
       withCredentials: true,
@@ -54,6 +54,9 @@ const Home: NextPage = () => {
         console.log(err);
       });
   }
+
+  
+
 
   const logout = () => {
     axios({
@@ -76,7 +79,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     getUser();
-    getJobOffers();
+    getReports();
     console.log(reports.length);
   }, []);
 

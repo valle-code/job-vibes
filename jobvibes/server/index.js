@@ -474,6 +474,28 @@ app.get('/getReports', (req, res) => {
   );
 });
 
+app.delete('/deleteJobpost/:id', (req, res) => {
+  const reportId = req.params.id;
+  const deleteQuery = "DELETE FROM `jobpost` WHERE id = ?";
+
+  db.query(deleteQuery, [reportId], (err, result) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, DELETE FROM `jobpost`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (result.affectedRows === 0) {
+      res.send('El reporte con id ' + reportId + ' no existe');
+      return;
+    }
+
+    res.send('El reporte con id ' + reportId + ' ha sido eliminado');
+  });
+});
+
+
+
 
 
 

@@ -20,6 +20,23 @@ const JobOffer: NextPage<Props> = (props) => {
         router.push(`/jobpost/${id}`);
     }
 
+    const deleteJobOffer = (id: number) => {
+        axios({
+            method: "delete",
+            withCredentials: true,
+            url: `http://localhost:3001/deleteJobpost/${id}`,
+            data: {
+                id: id
+            }
+        })
+            .then(() => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
 
     return (
         <Card>
@@ -61,7 +78,7 @@ const JobOffer: NextPage<Props> = (props) => {
                                     Ver Post
                                 </Text>
                             </Button>
-                            <Button flat auto rounded color="error" onClick={() => handleClick(props.id)} css={{ marginLeft: "15px" }} >
+                            <Button flat auto rounded color="error" onClick={() => deleteJobOffer(props.id)} css={{ marginLeft: "15px" }} >
                                 <Text
                                     css={{ color: "inherit" }}
                                     size={12}

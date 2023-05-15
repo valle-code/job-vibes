@@ -439,6 +439,42 @@ app.post('/sendReport', (req, res) => {
   });
 });
 
+app.get('/getReports', (req, res) => {
+  const selectQuery = "SELECT * FROM `reports` INNER JOIN jobpost ON reports.idPost = jobpost.id";
+
+  db.query(selectQuery, (err, rows) => {
+    if (err) {
+      console.error('Error en la ejecución de la consulta, SELECT * FROM `reports`: ', err);
+      res.status(500).send('Error executing query');
+      return;
+    }
+
+    if (rows.length === 0) {
+      res.send([]);
+      return;
+    }
+
+    const reportsData = rows.map(row => ({
+      id: row.idReport,
+      idPost: row.idPost,
+      titleReport: row.titleReport,
+      descriptionReport: row.descriptionReport,
+      creationDateReport: row.creationDateReport,
+      idJobPost: row.id,
+      titleJobPost: row.title,
+      descriptionJobPost: row.description,
+      thumbnailJobPost: row.thumbnail,
+      creationDateJobPost: row.creationDate,
+      jobDetailsJobPost: row.jobDetails,
+      creationDateJobPost: row.creationDate,
+    }));
+
+    res.send(reportsData);
+  }
+  );
+});
+
+
 
 
 // start server 

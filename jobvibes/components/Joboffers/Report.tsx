@@ -1,5 +1,5 @@
-import type {NextPage} from 'next';
-import { Card, Text, Row, Col, Button} from "@nextui-org/react";
+import type { NextPage } from 'next';
+import { Card, Text, Row, Col, Button } from "@nextui-org/react";
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -23,11 +23,11 @@ const JobOffer: NextPage<Props> = (props) => {
 
     return (
         <Card>
-            <Card.Header css={{position: "absolute", top: 5}}>
+            <Card.Header css={{ position: "absolute", top: 5 }}>
                 <Col>
                     <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
                         {title}
-                         
+
                     </Text>
                     <Text h4 color="white">
                         {label}
@@ -45,7 +45,7 @@ const JobOffer: NextPage<Props> = (props) => {
             >
                 <Row>
                     <Col>
-                        <Text color="#d1d1d1" size={16} css={{fontSize: "14px"}}>
+                        <Text color="#d1d1d1" size={16} css={{ fontSize: "14px" }}>
                             {candidateCount}
                         </Text>
                     </Col>
@@ -53,15 +53,24 @@ const JobOffer: NextPage<Props> = (props) => {
                         <Row justify="flex-end">
                             <Button flat auto rounded color="primary" onClick={() => handleClick(props.id)}>
                                 <Text
-                                    css={{color: "inherit"}}
+                                    css={{ color: "inherit" }}
                                     size={12}
                                     weight="bold"
                                     transform="uppercase"
                                 >
-                                    Ver más
+                                    Ver Post
                                 </Text>
                             </Button>
-                            
+                            <Button flat auto rounded color="error" onClick={() => handleClick(props.id)} css={{ marginLeft: "15px" }} >
+                                <Text
+                                    css={{ color: "inherit" }}
+                                    size={12}
+                                    weight="bold"
+                                    transform="uppercase"
+                                >
+                                    Eliminar
+                                </Text>
+                            </Button>
                         </Row>
                     </Col>
                 </Row>

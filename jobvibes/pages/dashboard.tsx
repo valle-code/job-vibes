@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import axios from "axios";
 import User from "./api/Models/User";
 import JobOfferData from './api/Models/JobOffer';
+import Report from './api/Models/Report';
 import { Modal, useModal } from '@nextui-org/react';
 import PopUp from '../components/Global/PopUp';
 
@@ -24,6 +25,7 @@ const DashBoard: NextPage = () => {
     const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const { setVisible, bindings } = useModal();
+    const [reports, setReports] = useState<Report[]>([]);
     const router = useRouter();
 
     const getUser = () => {
@@ -87,6 +89,21 @@ const DashBoard: NextPage = () => {
                 console.log(error);
             });
     };
+
+    const getReports = () => {
+        axios({
+            method: "get",
+            withCredentials: true,
+            url: "http://localhost:3001/getReports",
+          })
+            .then((res) => {
+              const reportsData = res.data.map((row: any) => new Report(row.id, row.idPost, row.titleReport, row.descriptionReport, row.thumbnailJobPost, row.creationDateReport));
+              setReports(reportsData);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+    }
 
     const getUsuariosBaneados = () => { return users.filter((user) => user.bannedRole === 1).length; }
 
@@ -177,6 +194,7 @@ const DashBoard: NextPage = () => {
         getUser();
         getAllUsers();
         getJobOffers();
+        getReports();
     }, []);
 
     return (
@@ -206,7 +224,7 @@ const DashBoard: NextPage = () => {
                         </label>
                     </div>
 
-                    <button className={styles.btn}>{getUsuariosBaneados() > 0 ? <FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px', color: 'red' }}/> : <FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px', color: 'black' }}/>}</button>
+                    <button className={styles.btn} onClick={() => router.push("reports")}>{reports.length > 0 ? <FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px', color: 'red' }}/> : <FontAwesomeIcon icon={faBell} style={{ fontSize: '25px', marginRight: '20px', color: 'black' }}/>}</button>
 
                     <button className={styles.btn} onClick={() => logout()}><div className={styles.user}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="" className={styles.img} />

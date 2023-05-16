@@ -15,9 +15,6 @@ import Report from './api/Models/Report';
 import { Modal, useModal } from '@nextui-org/react';
 import PopUp from '../components/Global/PopUp';
 
-
-
-
 const DashBoard: NextPage = () => {
     const [user, setUser] = useState<User | null>(null);
     const [users, setUsers] = useState<User[]>([]);

@@ -64,39 +64,43 @@ const Home: NextPage = () => {
   const collapseItems: CollapseItem[] = [
     {
       name: "Estadísticas",
-      link: "estadisticas"
+      link: "estadisticas",
     },
     {
       name: "Ofertas",
-      link: "ofertas"
+      link: "ofertas",
     },
     {
       name: "Ajustes",
-      link: "settings"
+      link: "settings",
     },
     {
       name: "Contacto",
-      link: "contacto"
+      link: "contact",
     },
     {
       name: "Legal",
-      link: "legal"
+      link: "legal",
     },
     {
       name: "Sobre Nostros",
-      link: "sobre-nosotros"
+      link: "sobre-nosotros",
     },
     {
       name: "Ayuda & Feedback",
-      link: "ayuda-feedback"
+      link: "ayuda-feedback",
     },
     {
       name: "Login",
-      link: "login"
+      link: "login",
     },
     {
       name: "Sign Up",
-      link: "register"
+      link: "register",
+    },
+    {
+      name: "Dashboard",
+      link: "dashboard",
     },
   ];
 
@@ -116,7 +120,8 @@ const Home: NextPage = () => {
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
             <Navbar.Link href="joboffers">Ofertas</Navbar.Link>
             <Navbar.Link href="settings">Ajustes</Navbar.Link>
-            <Navbar.Link href="#">Contacto</Navbar.Link>
+            {user?.adminRole === 1 ? <Navbar.Link href="dashboard">Dashboard</Navbar.Link> : <Navbar.Link href="contact">Contacto</Navbar.Link>}
+
           </Navbar.Content>
           <Navbar.Content>
             {user ? (
@@ -168,7 +173,7 @@ const Home: NextPage = () => {
             width="100"
             height="100"
           />
-          <div className={styles.name}>Daniel Valle</div>
+          <div className={styles.name}>{user?.username}</div>
           <div className={styles.job}>Programador</div>
         </div>
       </div>
@@ -180,11 +185,11 @@ const Home: NextPage = () => {
               <tbody>
                 <tr>
                   <td>Nombre:</td>
-                  <td>Daniel</td>
+                  <td>{user?.username}</td>
                 </tr>
                 <tr>
                   <td>Email:</td>
-                  <td>algo@gmail.com</td>
+                  <td>{user?.email}</td>
                 </tr>
                 <tr>
                   <td>Trabajo:</td>
@@ -192,7 +197,7 @@ const Home: NextPage = () => {
                 </tr>
                 <tr>
                   <td>Habilidades:</td>
-                  <td>Soy un inútil</td>
+                  <td>Null</td>
                 </tr>
               </tbody>
             </table>

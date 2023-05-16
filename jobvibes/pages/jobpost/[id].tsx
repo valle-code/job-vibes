@@ -152,44 +152,7 @@ const Home: NextPage = () => {
     }
   }, [id]);
 
-  const collapseItems: CollapseItem[] = [
-    {
-      name: "Estadísticas",
-      link: "estadisticas"
-    },
-    {
-      name: "Ofertas",
-      link: "ofertas"
-    },
-    {
-      name: "Ajustes",
-      link: "settings"
-    },
-    {
-      name: "Contacto",
-      link: "contacto"
-    },
-    {
-      name: "Legal",
-      link: "legal"
-    },
-    {
-      name: "Sobre Nostros",
-      link: "sobre-nosotros"
-    },
-    {
-      name: "Ayuda & Feedback",
-      link: "ayuda-feedback"
-    },
-    {
-      name: "Login",
-      link: "login"
-    },
-    {
-      name: "Sign Up",
-      link: "register"
-    },
-  ];
+  
 
   const handler = () => setVisible(true);
 
@@ -198,11 +161,54 @@ const Home: NextPage = () => {
     console.log("closed");
   };
 
+  const collapseItems: CollapseItem[] = [
+    {
+      name: "Estadísticas",
+      link: "estadisticas",
+    },
+    {
+      name: "Ofertas",
+      link: "ofertas",
+    },
+    {
+      name: "Ajustes",
+      link: "settings",
+    },
+    {
+      name: "Contacto",
+      link: "contact",
+    },
+    {
+      name: "Legal",
+      link: "legal",
+    },
+    {
+      name: "Sobre Nostros",
+      link: "sobre-nosotros",
+    },
+    {
+      name: "Ayuda & Feedback",
+      link: "ayuda-feedback",
+    },
+    {
+      name: "Login",
+      link: "login",
+    },
+    {
+      name: "Sign Up",
+      link: "register",
+    },
+    {
+      name: "Dashboard",
+      link: "dashboard",
+    },
+  ];
+
   return (
     <div style={{ "height": "100vh", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
       {/* Navbar */}
       <div style={{ width: "100%", backgroundColor: "white" }}>
-        <Navbar variant="sticky">
+      <Navbar variant="sticky">
           <Navbar.Brand>
             <Navbar.Toggle aria-label="toggle navigation" />
             <Text b color="inherit" hideIn="xs" css={{ marginLeft: "30px" }}>
@@ -213,9 +219,9 @@ const Home: NextPage = () => {
           </Navbar.Brand>
           <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
             <Navbar.Link href="#">Estadísticas</Navbar.Link>
-            <Navbar.Link href="/joboffers">Ofertas</Navbar.Link>
-            <Navbar.Link href="/settings">Ajustes</Navbar.Link>
-            {user?.adminRole === 1 ? <Navbar.Link href="/dashboard">Dashboard</Navbar.Link> : <Navbar.Link href="contact">Contacto</Navbar.Link>}
+            <Navbar.Link href="http://localhost:3000/joboffers">Ofertas</Navbar.Link>
+            <Navbar.Link href="http://localhost:3000/settings">Ajustes</Navbar.Link>
+            {user?.adminRole === 1 ? <Navbar.Link href="http://localhost:3000/dashboard">Dashboard</Navbar.Link> : <Navbar.Link href="http://localhost:3000/contact">Contacto</Navbar.Link>}
 
           </Navbar.Content>
           <Navbar.Content>
@@ -230,7 +236,7 @@ const Home: NextPage = () => {
               </>
             ) : (
               <>
-                <Navbar.Link color="inherit" href="/login">
+                <Navbar.Link color="inherit" href="login">
                   Login
                 </Navbar.Link>
                 <Navbar.Item>

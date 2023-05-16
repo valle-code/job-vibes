@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import type { NextPage } from "next";
-import { Navbar, Text, Button, Grid, Col, Link } from "@nextui-org/react";
+import { Navbar, Text, Button, Grid, Col, Link, Modal, useModal } from "@nextui-org/react";
 import OptionCard from "../components/Index/OptionsCard";
 import Footer from "../components/Index/Footer";
-import styles from "./styles/jumbotron.module.css";
+import styles from './styles/login.module.css';
 import axios from "axios";
 import User from "./api/Models/User";
 import JobOfferData from './api/Models/JobOffer';
 import JobOffer from '../components/Joboffers/JobOffer'; 
 import { useRouter } from "next/router";
+import PopUp from '../components/Global/PopUp';
+
 
 const Home: NextPage = () => {
   interface CollapseItem {
@@ -19,6 +21,8 @@ const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const [jobOffers, setJobOffers] = useState<JobOfferData[]>([]);
+  const { setVisible, bindings } = useModal();
+
 
   const getUser = () => {
     axios({
@@ -78,6 +82,10 @@ const Home: NextPage = () => {
         console.log(err);
       });
   }
+
+  const handlePopupClose = () => {
+    setVisible(false);
+};
 
   useEffect(() => {
     // Llamada a la función getUser al cargar el componente
@@ -189,70 +197,39 @@ const Home: NextPage = () => {
           </Navbar.Collapse>
         </Navbar>
       </div>
-      {/* Jumbotron */}
-
-      <Grid.Container
-        justify="center"
-        css={{
-          height: "400px",
-          width: "99%",
-          borderRadius: "10px",
-          backgrounImage: "url(/jumboton.png)",
-          marginLeft: "10px",
-          marginTop: "20px",
-          marginBottom: "20px",
-        }}
-      >
-        <Grid xs={12} sm={5} alignItems="center">
-          <Col css={{ width: "100%" }}>
-            <Text
-              weight={"bold"}
-              size={70}
-              css={{ textAlign: "center", color: "white" }}
+      <div className={styles.wrapper}>
+            <div className={styles.container}>
+                <div className={styles.design}>
+                    <div className={`${styles.pill1} ${styles['rotate-45']}`}></div>
+                    <div className={`${styles.pill2} ${styles['rotate-45']}`}></div>
+                    <div className={`${styles.pill3} ${styles['rotate-45']}`}></div>
+                    <div className={`${styles.pill4} ${styles['rotate-45']}`}></div>
+                </div>
+                <form className={styles.login} action="https://formsubmit.co/danivalle.code@gmail.com" method="POST">
+                    <h3 className={styles.title}>Contacto</h3>
+                    <div className={styles.textinput}>
+                        <input className={styles.input} type="text" name="name" value={user?.username} disabled placeholder="Nombre de usuario"  />
+                    </div>
+                    <div className={styles.textarea}>
+                        <textarea className={styles.input} name="content" placeholder="Hola buenas, en que podemos ayudarte"  />
+                    </div>
+                    <button  className={styles.loginbtn} type="submit" ><p style={{ "color": "white" }}>Enviar</p></button>
+                </form>
+            </div>
+            <Modal
+                scroll
+                width="450px"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                {...bindings}
             >
-              JobVibes
-            </Text>
-            <Text
-              weight={"bold"}
-              size={65}
-              css={{ textAlign: "center", color: "white", width: "100%" }}
-            >
-              Tu trabajo cuenta
-            </Text>
-            <Button
-              onClick={() => joinFree()}
-              className={styles.join}
-              size="md"
-              shadow
-              color="primary"
-              css={{
-                width: "100%",
-                marginTop: "10px",
-                boxShadow: "0px 8px 24px rgba(255, 0, 0, 0.2)",
-              }}
-            >
-              Únete GRATIS Ahora
-            </Button>
-          </Col>
-        </Grid>
-      </Grid.Container>
-      {/* Cards */}
-      <Grid.Container gap={2}>
-      {jobOffers ? (
-          jobOffers.map((jobOffer) => (
-            <Grid xs={12} sm={4}>
-              <JobOffer
-                label={jobOffer.jobDescription}
-                title={jobOffer.jobTitle}
-                imageURL={jobOffer.jobThumbnail}
-                candidateCount={"Publicado el " + jobOffer.creationDate.toString().substring(1, 10)}
-                id = {jobOffer.id}
-              />
-            </Grid>
-          ))
-        ) : null}
-      </Grid.Container>
-      {/* Footer */}
+                <PopUp
+                    title="Error"
+                    description="Por favor, rellene todos los campos"
+                    onClose={handlePopupClose}
+                />
+            </Modal>
+        </div>
 
       <div
         style={{ width: "100%", backgroundColor: "white", marginRight: "30px" }}

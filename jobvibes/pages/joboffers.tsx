@@ -133,47 +133,51 @@ const Home: NextPage = () => {
   const collapseItems: CollapseItem[] = [
     {
       name: "Estadísticas",
-      link: "estadisticas"
+      link: "estadisticas",
     },
     {
       name: "Ofertas",
-      link: "joboffers"
+      link: "ofertas",
     },
     {
       name: "Ajustes",
-      link: "settings"
+      link: "settings",
     },
     {
       name: "Contacto",
-      link: "contacto"
+      link: "contact",
     },
     {
       name: "Legal",
-      link: "legal"
+      link: "legal",
     },
     {
       name: "Sobre Nostros",
-      link: "sobre-nosotros"
+      link: "sobre-nosotros",
     },
     {
       name: "Ayuda & Feedback",
-      link: "ayuda-feedback"
+      link: "ayuda-feedback",
     },
     {
       name: "Login",
-      link: "login"
+      link: "login",
     },
     {
       name: "Sign Up",
-      link: "register"
+      link: "register",
+    },
+    {
+      name: "Dashboard",
+      link: "dashboard",
     },
   ];
 
   return (
-    <div style={{ "height": "100vh", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100%" }}>
       {/* Navbar */}
       <div style={{ width: "100%", backgroundColor: "white" }}>
-      <Navbar variant="sticky">
+        <Navbar variant="sticky">
           <Navbar.Brand>
             <Navbar.Toggle aria-label="toggle navigation" />
             <Text b color="inherit" hideIn="xs" css={{ marginLeft: "30px" }}>

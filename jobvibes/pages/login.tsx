@@ -43,7 +43,7 @@ const Login: NextPage = () => {
             if (err.response && err.response.status === 403) {
                 router.push('/ban');
             } else {
-                alert('Error al iniciar sesión, compruebe sus credenciales');
+                setVisible(true);
             }
             return;
         });
@@ -97,7 +97,7 @@ const Login: NextPage = () => {
             >
                 <PopUp
                     title="Error"
-                    description="Por favor, rellene todos los campos"
+                    description="Usuario o contraseña incorrectos"
                     onClose={handlePopupClose}
                 />
             </Modal>
